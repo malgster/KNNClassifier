@@ -1,12 +1,12 @@
 package titanic;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
+import both.DataSet;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import dataInterfaces.IDataSet;
@@ -19,34 +19,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class TitanicPassenger implements IDataSet {
+public class TitanicDataSet implements IDataSet {
 
 
-
-
-    // c moche ?
-    private static List<TitanicRawData> myData;
+    // à tout moment cette classe saute
+    private static List<TitanicRawData> myTitanicData;
     private static List<IPoint> myTitanicPoints;
 
-    public static List<TitanicRawData> getMyData() {
-		return myData;
-	}
 
-
-	public static void load(String fileName) {
-    	try {
-			System.out.println(fileName);
-			myData=new CsvToBeanBuilder<TitanicRawData>(Files.newBufferedReader(Paths.get(fileName)))
-					.withSeparator(',')
-					.withType(TitanicRawData.class)
-					.build().parse();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    }
-    
     
     @Override
     public String getTitle() {
@@ -73,14 +53,19 @@ public class TitanicPassenger implements IDataSet {
     	myTitanicPoints.addAll(element);
     }
 
+
+
     @Override
     public Iterator<IPoint> iterator() {
-        return null;
+        return myTitanicPoints.iterator();
     }
-    
-    public static void main(String[] args) {
-    	String fileName=Paths.get(".").normalize().toAbsolutePath()+File.separator+"ressources/titanic.csv";
-    	TitanicPassenger.load(fileName);
-		System.out.println(myData);
-	}
+
+    public static List<TitanicRawData> getMyTitanicData() {
+        return myTitanicData;
+    }
+
+    public static void setMyTitanicData(List<TitanicRawData> myTitanicData) {
+        TitanicDataSet.myTitanicData = myTitanicData;
+    }
+
 }

@@ -10,12 +10,12 @@ public class ColonneString implements IColumn {
     protected IDataSet stringColDataSet;
     protected IValueNormalizer stringColNormalizer;
 
+	protected final IValueNormalizer.TypeNormalizer stringColTypeNorm = IValueNormalizer.TypeNormalizer.OTHER_NORMALIZER;
 
-    public ColonneString(final String name, IDataSet intColDataSet, IValueNormalizer intColNormalizer){
+
+    public ColonneString(final String name, IDataSet intColDataSet){
         this.name = name;
         this.stringColDataSet = intColDataSet;
-        setNormalizer(intColNormalizer);
-
     }
 
 	@Override
@@ -25,13 +25,11 @@ public class ColonneString implements IColumn {
 
 	@Override
 	public double getNormalizedValue(IPoint point) {
-		// TODO Auto-generated method stub
-		return 0;
+		return -1;
 	}
 
 	@Override
 	public Object getDenormalizedValue(double value) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

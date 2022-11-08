@@ -4,6 +4,7 @@ import dataInterfaces.IColumn;
 import dataInterfaces.IDataSet;
 import dataInterfaces.IPoint;
 import dataInterfaces.IValueNormalizer;
+import iris.IrisVariety;
 
 public class ColonneVariety implements IColumn, IValueNormalizer{
 
@@ -14,24 +15,17 @@ public class ColonneVariety implements IColumn, IValueNormalizer{
 	protected final IValueNormalizer.TypeNormalizer varietyColTypeNorm = IValueNormalizer.TypeNormalizer.OTHER_NORMALIZER;
 
 
-	public ColonneVariety(final String name, IDataSet intColDataSet, IValueNormalizer intColNormalizer){
+	public ColonneVariety(final String name, IDataSet intColDataSet){
 		this.name = name;
 		this.varietyColDataSet = intColDataSet;
-		setNormalizer(intColNormalizer);
 
 	}
 
 	@Override
 	public double normalize(Object value) {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((IrisVariety) value).getNorm();
 	}
 
-	@Override
-	public double denormalize(Object value) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public void setNormalizer(IValueNormalizer valueNormalizer) {
@@ -40,14 +34,12 @@ public class ColonneVariety implements IColumn, IValueNormalizer{
 
 	@Override
 	public double getNormalizedValue(IPoint point) {
-		// TODO Auto-generated method stub
-		return 0;
+    	return normalize(point.getValue(this));
 	}
 
 	@Override
 	public Object getDenormalizedValue(double value) {
-		// TODO Auto-generated method stub
-		return null;
+    	return denormalize(value);
 	}
 
 	@Override
@@ -63,6 +55,14 @@ public class ColonneVariety implements IColumn, IValueNormalizer{
 	@Override
 	public boolean isNormalizable() {
 		return varietyColNormalizer!=null;
+	}
+
+	@Override
+	public Object denormalize(Double value) {
+		if (value==0) return IrisVariety.SETOSA;
+		if (value==0.5) return IrisVariety.VERSICOLOR;
+		if (value==1) return IrisVariety.VIRGINICA;
+		return null;
 	}
 
 }

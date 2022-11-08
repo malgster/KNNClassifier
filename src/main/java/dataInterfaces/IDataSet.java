@@ -2,7 +2,9 @@ package dataInterfaces;
 
 import java.util.List;
 
-public interface IDataSet extends Iterable<IPoint> {
+import both.DataSet;
+
+public interface IDataSet extends Iterable<IPoint>{
 
     /**
             * Le nom du DataSet ex: Titanic, Iris, Pokemon, ...

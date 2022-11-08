@@ -1,5 +1,6 @@
 package iris;
 
+import both.DataSet;
 import com.opencsv.bean.CsvBindByName;
 
 import dataInterfaces.IColumn;
@@ -43,7 +44,20 @@ public class IrisRawData implements IPoint {
 
 	@Override
 	public Object getValue(IColumn col) {
-		return null;
+		switch(col.getName()) {
+		case "sepalLength":
+			return getSepalLength();
+		case "sepalWidth":
+			return getSepalWidth();
+		case "petalLength":
+			return getPetalLength();
+		case "petalWitdh":
+			return getPetalWidth();
+		case "variety":
+			return getVariety();
+		default:
+			return null;
+		}
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package dataInterfaces;
 
 public interface IDistance {
-    public double distanceEuclidienne(Object o1, Object o2);
-    public double distanceManhatthan(Object o1, Object o2);
+    public double distanceEuclidienne(IPoint o1, IPoint o2);
+    public double distanceManhatthan(IPoint o1, IPoint o2);
     public void knnMethod();
 }

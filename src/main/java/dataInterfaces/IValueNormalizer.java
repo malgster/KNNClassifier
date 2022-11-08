@@ -7,7 +7,7 @@ public interface IValueNormalizer {
     }
 
     public double normalize(Object value);
-    public double denormalize(Object value);
+    public Object denormalize(Double value);
 
 
 }

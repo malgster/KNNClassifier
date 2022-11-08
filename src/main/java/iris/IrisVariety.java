@@ -2,14 +2,14 @@ package iris;
 
 public enum IrisVariety {
 
-    SETOSA(1), VERSICOLOR(2), VIRGINICA(3);
+    SETOSA(0.0), VERSICOLOR(0.5), VIRGINICA(1.0);
 
-    int norm;
-    private IrisVariety(int norm) {
+    double norm;
+    private IrisVariety(double norm) {
         this.norm = norm;
     }
     
-    public int getNorm() {
+    public double getNorm() {
     	return norm;
     }
 }

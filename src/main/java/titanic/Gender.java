@@ -8,4 +8,10 @@ public enum Gender {
     private Gender(int norm){
         this.norm = norm;
     }
+
+	public int getNorm() {
+		return norm;
+	}
+    
+    
 }

@@ -43,6 +43,8 @@ public class Category implements ICategory {
         this.myCategoryPoints.addAll(elements);
     }
 
+
+
     @Override
     public Iterator<IPoint> iterator() {
         return this.myCategoryPoints.iterator();

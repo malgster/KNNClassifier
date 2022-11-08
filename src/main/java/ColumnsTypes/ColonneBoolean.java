@@ -18,10 +18,9 @@ public class ColonneBoolean implements IColumn, IValueNormalizer {
 
 
 
-    public ColonneBoolean(final String name, IDataSet boolColDataSet, IValueNormalizer boolcolNormalizer){
+    public ColonneBoolean(final String name, IDataSet boolColDataSet){
         this.name = name;
         this.boolColDataSet = boolColDataSet;
-        setNormalizer(boolcolNormalizer);
     }
 
     @Override
@@ -32,13 +31,13 @@ public class ColonneBoolean implements IColumn, IValueNormalizer {
     // TODO
     @Override
     public double getNormalizedValue(IPoint point) {
-        return normalize(point);
+        return normalize(point.getValue(this));
     }
 
     // TODO
     @Override
     public Object getDenormalizedValue(double value) {
-        return null;
+        return denormalize(value);
     }
 
     @Override
@@ -64,9 +63,13 @@ public class ColonneBoolean implements IColumn, IValueNormalizer {
         return 0;
     }
 
-    // TODO
-    @Override
-    public double denormalize(Object value) {
-    	return 0;
-    }
+	@Override
+	public Object denormalize(Double value) {
+		if(value==1) {
+			return true;
+		}
+		return false;
+	}
+
+
 }
