@@ -1,7 +1,7 @@
 package titanic;
 
 
-import both.DataSet;
+
 import com.opencsv.bean.CsvBindByName;
 
 import dataInterfaces.IColumn;
@@ -12,6 +12,73 @@ public class TitanicRawData  implements IPoint {
 	int passengerId;
 	@CsvBindByName(column = "Survived")
 	boolean survived;
+	@CsvBindByName(column = "Pclass")
+	int passengerClass;
+	@CsvBindByName(column = "Name")
+	String name;
+	@CsvBindByName(column = "Sex")
+	Gender gen;
+	@CsvBindByName(column = "Age")
+	double age;
+	@CsvBindByName(column = "SibSp")
+	int sibSp;
+	@CsvBindByName(column = "Parch")
+	int parch;
+	@CsvBindByName(column = "Ticket")
+	String ticket;
+	@CsvBindByName(column = "Cabin")
+	String cabin;
+	@CsvBindByName(column = "Fare")
+	double fare;
+	@CsvBindByName(column = "Embarked")
+	char embarked;
+
+	@Override
+	public Object getValue(IColumn col) {
+		switch(col.getName().toLowerCase()) {
+		case "passengerid":
+			return this.passengerId;
+		case "survived":
+			return this.survived;
+		case "passengerclass":
+			return this.passengerClass;
+		case "name":
+			return this.name;
+		case "gen":
+			return this.gen;
+		case "age":
+			return this.age;
+		case "sibsp":
+			return this.sibSp;
+		case "parch":
+			return this.parch;
+		case "ticket":
+			return this.ticket;
+		case "cabin":
+			return this.cabin;
+		case "fare":
+			return this.fare;
+		case "embarked":
+			return this.embarked;
+		default:
+			return null;
+		}
+
+	}
+
+	@Override
+	public double getNormalizedValue(IColumn xcol) {
+		return xcol.getNormalizedValue(this);
+	}
+
+	@Override
+	public String toString() {
+		
+		return "TitanicRawData [passengerId=" + passengerId + ", survived=" + survived + ", passengerClass="
+				+ passengerClass + ", name=" + name + ", gen=" + gen + ", age=" + age + ", sibSp=" + sibSp + ", parch="
+				+ parch + ", ticket=" + ticket + ", cabin=" + cabin + ", fare=" + fare + ", embarked=" + embarked + "]";
+	}
+
 	public int getPassengerId() {
 		return passengerId;
 	}
@@ -59,71 +126,9 @@ public class TitanicRawData  implements IPoint {
 	public char getEmbarked() {
 		return embarked;
 	}
-
-	@CsvBindByName(column = "Pclass")
-	int passengerClass;
-	@CsvBindByName(column = "Name")
-	String name;
-	@CsvBindByName(column = "Sex")
-	Gender gen;
-	@CsvBindByName(column = "Age")
-	double age;
-	@CsvBindByName(column = "SibSp")
-	int sibSp;
-	@CsvBindByName(column = "Parch")
-	int parch;
-	@CsvBindByName(column = "Ticket")
-	String ticket;
-	@CsvBindByName(column = "Cabin")
-	String cabin;
-	@CsvBindByName(column = "Fare")
-	double fare;
-	@CsvBindByName(column = "Embarked")
-	char embarked;
-
-	@Override
-	public Object getValue(IColumn col) {
-		switch(col.getName()) {
-		case "passengerId":
-			return this.passengerId;
-		case "survived":
-			return this.survived;
-		case "passengerClass":
-			return this.passengerClass;
-		case "name":
-			return this.name;
-		case "gen":
-			return this.gen;
-		case "age":
-			return this.age;
-		case "sibSp":
-			return this.sibSp;
-		case "parch":
-			return this.parch;
-		case "ticket":
-			return this.ticket;
-		case "cabin":
-			return this.cabin;
-		case "fare":
-			return this.fare;
-		case "embarked":
-			return this.embarked;
-		default:
-			return null;
-		}
-
+	
+    public static void main(String[] args) {
+		System.out.println("Hello");
 	}
 
-	@Override
-	public double getNormalizedValue(IColumn xcol) {
-		return xcol.getNormalizedValue(this);
-	}
-
-	@Override
-	public String toString() {
-		
-		return "TitanicRawData [passengerId=" + passengerId + ", survived=" + survived + ", passengerClass="
-				+ passengerClass + ", name=" + name + ", gen=" + gen + ", age=" + age + ", sibSp=" + sibSp + ", parch="
-				+ parch + ", ticket=" + ticket + ", cabin=" + cabin + ", fare=" + fare + ", embarked=" + embarked + "]";
-	}
 }

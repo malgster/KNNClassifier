@@ -1,6 +1,5 @@
 package iris;
 
-import both.DataSet;
 import com.opencsv.bean.CsvBindByName;
 
 import dataInterfaces.IColumn;
@@ -8,7 +7,6 @@ import dataInterfaces.IPoint;
 
 
 public class IrisRawData implements IPoint {
-
 
 	@CsvBindByName(column = "sepal.length")
 	protected double sepalLength;
@@ -25,6 +23,7 @@ public class IrisRawData implements IPoint {
 		return "Iris: sepal length = "+sepalLength+", sepalWidth = "+sepalWidth+", petalLength = "+petalLength+", petalWidth = "+petalWidth+", variety = "+variety;
 	}
 
+
 	public double getSepalLength() {
 		return this.sepalLength;
 	}
@@ -37,21 +36,22 @@ public class IrisRawData implements IPoint {
 	public double getPetalWidth() {
 		return this.petalWidth;
 	}
-	
+
 	public IrisVariety getVariety() {
 		return this.variety;
 	}
 
 	@Override
 	public Object getValue(IColumn col) {
-		switch(col.getName()) {
-		case "sepalLength":
+
+		switch(col.getName().toLowerCase()) {
+		case "sepallength":
 			return getSepalLength();
-		case "sepalWidth":
+		case "sepalwidth":
 			return getSepalWidth();
-		case "petalLength":
+		case "petallength":
 			return getPetalLength();
-		case "petalWitdh":
+		case "petalwidth":
 			return getPetalWidth();
 		case "variety":
 			return getVariety();
@@ -65,6 +65,3 @@ public class IrisRawData implements IPoint {
 		return xcol.getNormalizedValue(this);
 	}
 }
-
-
-

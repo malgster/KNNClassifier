@@ -3,13 +3,12 @@ package both;
 import dataInterfaces.ICategory;
 import dataInterfaces.IColumn;
 import dataInterfaces.IPoint;
-import lombok.EqualsAndHashCode;
 
 import java.util.Iterator;
 import java.util.List;
 
 
-@EqualsAndHashCode
+
 public class Category implements ICategory {
 
     private String categoryTitle;
