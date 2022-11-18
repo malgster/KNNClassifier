@@ -1,5 +1,6 @@
 package both;
 
+import Normalizers.NullNormalizer;
 import both.DataSet;
 import dataInterfaces.IColumn;
 import dataInterfaces.IDataSet;
@@ -13,15 +14,23 @@ public class Column implements IColumn {
     private IValueNormalizer normalizer;
 
 
-
-    public Column(final String name, DataSet itsDataSet){
+    public Column (final String name, DataSet itsDataSet, IValueNormalizer normalizer) {
         this.name = name;
         this.itsDataSet = itsDataSet;
+        this.normalizer = normalizer;
+    }
+
+    public Column(final String name, DataSet itsDataSet){
+        this(name, itsDataSet, new NullNormalizer());
     }
 
     @Override
     public void setNormalizer(IValueNormalizer valueNormalizer) {
         this.normalizer = valueNormalizer;
+    }
+    
+    public IValueNormalizer getNormalizer() {
+        return this.normalizer;
     }
 
     @Override
@@ -47,7 +56,7 @@ public class Column implements IColumn {
 
     @Override
     public boolean isNormalizable() {
-        return normalizer != null;
+        return !normalizer.getClass().equals(NullNormalizer.class);
     }
 
     public double getMin() {

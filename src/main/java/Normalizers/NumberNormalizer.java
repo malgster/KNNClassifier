@@ -1,6 +1,10 @@
 package Normalizers;
 
 import dataInterfaces.IValueNormalizer;
+import utils.Format;
+
+
+import java.math.RoundingMode;
 
 public class NumberNormalizer implements IValueNormalizer {
 
@@ -14,11 +18,13 @@ public class NumberNormalizer implements IValueNormalizer {
 
     @Override
     public double normalize(Object value) {
-        return ((Double) value-min)/(max-min);
+        double input = (((Double) value) - min) / (max-min);
+        return Format.formatDouble(input, 2, RoundingMode.DOWN);
     }
 
     @Override
     public Object denormalize(Double value) {
-        return value*(max-min)+min;
+         double input =  value*(max-min)+min;
+        return Format.formatDouble(input, 1, RoundingMode.UP);
     }
 }

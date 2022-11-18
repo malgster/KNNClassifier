@@ -2,14 +2,36 @@
              Graphic Chart
 -----------------------------------------
 
-Color Tints : 
+Color Tints :
 
-100 = #00FFA8
+Cyan
+
+100 = #00ffa8
 90  = #1affb1
 60  = #66ffcb
 30  = #b3ffe5
 10  = #e5fff6
 0   = #ffffff
+
+Gray
+
+100 = #808080
+90  = #8d8d8d
+60  = #b3b3b3
+30  = #d9d9d9
+10  = #f2f2f2
+0   = #ffffff
+
+Purple
+
+100 = #9600ff
+90  = #a01aff
+60  = #c066ff
+30  = #dfb3ff
+10  = #f4e5ff
+0   = #ffffff
+
+
 
 -----------------------------------------
 
@@ -22,3 +44,5 @@ TextBox =
 Others  =
 
 -----------------------------------------
+
+https://colordesigner.io/

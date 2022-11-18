@@ -31,7 +31,7 @@ public class TitanicRawData  implements IPoint {
 	@CsvBindByName(column = "Fare")
 	double fare;
 	@CsvBindByName(column = "Embarked")
-	char embarked;
+	Embarked embarked;
 
 	@Override
 	public Object getValue(IColumn col) {
@@ -123,7 +123,7 @@ public class TitanicRawData  implements IPoint {
 		return fare;
 	}
 
-	public char getEmbarked() {
+	public Embarked getEmbarked() {
 		return embarked;
 	}
 	

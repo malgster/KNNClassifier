@@ -12,6 +12,9 @@ public interface IColumn {
      * Si la colonne n'est pas normalisable, le comportement n'est pas
      * definit.
      */
+    
+    public IValueNormalizer getNormalizer();
+    
     public double getNormalizedValue(IPoint point);
     /**
      * "Denormalise" une valeur entre 0 et 1 en une "vraie" valeur pour

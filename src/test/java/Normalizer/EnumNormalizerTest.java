@@ -24,7 +24,7 @@ public class EnumNormalizerTest {
     }
 
     @Test
-    void enum_normalizer_get_number_of_element(){
+    void enum_normalizer_get_number_of_element_test(){
         assertEquals(2,genderNorm.getNumberOfElements());
         assertEquals(3,varietyNorm.getNumberOfElements());
         assertEquals(3,embarkedNorm.getNumberOfElements());
@@ -43,7 +43,7 @@ public class EnumNormalizerTest {
     }
 
     @Test
-        void enum_Normalizer_Normalize(){
+        void enum_Normalizer_Normalize_test(){
         assertEquals(1.0, genderNorm.normalize(Gender.MALE));
         assertEquals(0.0, genderNorm.normalize(Gender.FEMALE));
         assertEquals(0.0, varietyNorm.normalize(IrisVariety.SETOSA));
@@ -55,7 +55,7 @@ public class EnumNormalizerTest {
     }
 
     @Test
-        void enum_Normalizer_Denormalize(){
+        void enum_Normalizer_Denormalize_test(){
         assertEquals(Gender.MALE, genderNorm.denormalize(1.0));
         assertEquals(Gender.FEMALE, genderNorm.denormalize(0.0));
         assertEquals(IrisVariety.SETOSA, varietyNorm.denormalize(0.0));

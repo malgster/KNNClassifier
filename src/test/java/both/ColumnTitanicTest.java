@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import dataInterfaces.IPoint;
+import titanic.Embarked;
 import titanic.Gender;
 import titanic.TitanicRawData;
 
@@ -43,7 +44,7 @@ class ColumnTitanicTest {
 		 parchCol = new Column("parch", testDataSet);
 		 cabinCol = new Column("cabin", testDataSet);
 		 fareCol = new Column("fare", testDataSet);
-		 embarkedCol = new Column(("embarked"), testDataSet);
+		 embarkedCol = new Column("embarked", testDataSet);
 	}
 
 
@@ -60,7 +61,7 @@ class ColumnTitanicTest {
 		assertEquals("STON/O2.3101282", testDataSet.getMyPoints().get(2).getValue(ticketCol));
 		assertEquals(11.1333, testDataSet.getMyPoints().get(8).getValue(fareCol));
 		assertEquals("", testDataSet.getMyPoints().get(9).getValue(cabinCol));
-		assertEquals('S', testDataSet.getMyPoints().get(10).getValue(embarkedCol));
+		assertEquals(Embarked.S, testDataSet.getMyPoints().get(10).getValue(embarkedCol));
 	}
 
 }

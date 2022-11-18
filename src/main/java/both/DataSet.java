@@ -19,11 +19,16 @@ public class DataSet implements IDataSet{
 
    protected final Class<? extends IPoint> pointClass;
    private List<IColumn> columns;
+   private IColumn classe;
 
    public DataSet(final String name, Class<? extends IPoint> pointClass){
       this.myPoints = new LinkedList<>();
       this.name = name;
       this.pointClass = pointClass;
+   }
+
+   public List<IColumn> getColumns() {
+      return columns;
    }
 
    public void setColumns(IColumn ...columns){
@@ -104,6 +109,14 @@ public class DataSet implements IDataSet{
 
    public void setMyPoints(List<? extends IPoint> myPoints) {
       this.myPoints = myPoints;
+   }
+   
+   public void setClasse(IColumn colonne) {
+	   classe=colonne;
+   }
+   
+   public IColumn getClasse() {
+	   return classe;
    }
 
 }
