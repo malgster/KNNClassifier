@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="216.0" styleClass="background" stylesheets="@../styles/dataset.css"
+      xmlns="http://javafx.com/javafx/19" fx:controller="view.ChooseClassParamView">
+    <children>
+        <VBox fx:id="vBoxAttributes" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" styleClass="pane"
+              stylesheets="@../styles/dataset.css" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+                  stylesheets="@../styles/dataset.css">
+                <children>
+                    <Label>text="k"</Label>
+                    <TextField>fx:id="kValue" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"</TextField>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+                  stylesheets="@../styles/dataset.css">
+                <children>
+                    <Label>text="Distance"</Label>
+                    <TextField>fx:id="distanceValue" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"</TextField>
+                </children>
+            </HBox>
+            <padding>
+                <Insets left="12.0" right="12.0"/>
+            </padding>
+            <VBox.margin>
+                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+            </VBox.margin>
+        </VBox>
+        <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxWidth="1.7976931348623157E308"
+                mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#handleOk" styleClass="validateButton"
+                stylesheets="@../styles/dataset.css" text="OK">
+            <VBox.margin>
+                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+            </VBox.margin>
+        </Button>
+    </children>
+    <padding>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+    </padding>
+</VBox>

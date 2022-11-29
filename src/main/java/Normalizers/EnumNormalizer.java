@@ -3,41 +3,56 @@ package Normalizers;
 import dataInterfaces.IColumn;
 import dataInterfaces.IPoint;
 import dataInterfaces.IValueNormalizer;
-import iris.IrisVariety;
 import titanic.Embarked;
-import titanic.Gender;
+import utils.Format;
 
+import java.math.RoundingMode;
 import java.util.EnumSet;
 import java.util.Iterator;
 
+/**
+ * normalizers set to enum Columns(embarked for example)
+ */
 public class EnumNormalizer implements IValueNormalizer {
 
     private final Class<? extends Enum> enumClass;
 
-    public EnumNormalizer(final Class<? extends  Enum> enumClass){
+    public EnumNormalizer(final Class<? extends Enum> enumClass) {
         this.enumClass = enumClass;
     }
 
 
+    public static final boolean valueIsEnum(IPoint i, IColumn col) {
+        return i.getValue(col).getClass().isEnum();
+    }
+
+    public static double finalNormalisation(IPoint o1, IPoint o2, IColumn col) {
+        return (o1.getNormalizedValue(col) - o2.getNormalizedValue(col) == 0 ) ? 0 : 1;
+    }
+
     @Override
     public double normalize(Object value) {
         Enum m = ((Enum) value);
-        return (m.ordinal())/ (this.getNumberOfElements()-1);
+        return Format.formatDouble((m.ordinal()) / (this.getNumberOfElements() - 1), 1, RoundingMode.DOWN);
     }
 
     @Override
     public Object denormalize(Double value) {
-
-        return this.castByOrdinal(value*(this.getNumberOfElements()-1));
+        return this.castByOrdinal(value * (this.getNumberOfElements() - 1));
     }
 
-    private  <E extends Enum> Enum castByOrdinal(Double ordinal){
+    @Override
+    public String stringValue() {
+        return "enum";
+    }
+
+    private <E extends Enum> Enum castByOrdinal(Double ordinal) {
         final Iterator<E> iter = EnumSet.allOf(enumClass).iterator();
         int count = 0;
         E eValue = null;
         while (count <= ordinal.intValue()) {
             if (!iter.hasNext()) {
-                return null;
+                return Embarked.NULL;
             }
             eValue = iter.next();
             count++;
@@ -45,18 +60,8 @@ public class EnumNormalizer implements IValueNormalizer {
         return eValue;
     }
 
-    public final double getNumberOfElements(){
+    public final double getNumberOfElements() {
         return EnumSet.allOf(enumClass).size();
     }
 
-    private static final boolean areEqualsEnums(IPoint o1, IPoint o2, IColumn col) {
-            return o1.getValue(col).equals(o2.getValue(col));
-    }
-    public static final boolean valueIsEnum(IPoint i, IColumn col) {
-        return i.getValue(col).getClass().isEnum();
-    }
-
-    public static double finalNormalisation(IPoint o1, IPoint o2, IColumn col) {
-        return areEqualsEnums(o1, o2, col) ? 0 : 1;
-    }
 }

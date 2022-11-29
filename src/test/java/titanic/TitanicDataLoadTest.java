@@ -1,21 +1,23 @@
 package titanic;
 
-import both.CsvLoader;
 import both.DataSet;
-import dataInterfaces.IPoint;
 import iris.IrisRawData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.CsvLoader;
 
 import java.io.File;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * tests if the csvLoad works for titanic
+ */
 public class TitanicDataLoadTest {
 
-    String fileName= Paths.get(".").normalize().toAbsolutePath()+ File.separator+"ressources/titanic.csv";
-    DataSet testDataSet = new DataSet("TitanicSet", (Class<? extends IPoint>) TitanicRawData.class);
+    String fileName = Paths.get(".").normalize().toAbsolutePath() + File.separator + "src/main/resources/datasets/titanic.csv";
+    DataSet testDataSet = new DataSet("TitanicSet", TitanicRawData.class);
 
     @BeforeEach
     void setUp() {
@@ -23,11 +25,11 @@ public class TitanicDataLoadTest {
     }
 
     @Test
-    void test_good_loading_of_points(){
+    void test_good_loading_of_points() {
         assertNotNull(testDataSet.getMyPoints());
-        assertNotNull(testDataSet.getMyPoints().get(15));
-        assertNotNull(testDataSet.getMyPoints().get(53));
-        assertNotNull(testDataSet.getMyPoints().get(87));
+        assertNotNull(testDataSet.getPoint(15));
+        assertNotNull(testDataSet.getPoint(53));
+        assertNotNull(testDataSet.getPoint(87));
     }
 
 }

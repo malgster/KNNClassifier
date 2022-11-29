@@ -2,12 +2,12 @@ package titanic;
 
 /**
  * indicates the port of embarkation :
- * - C = Cherbourg
- * - Q = QueensTown
- * - S = Southampton
+ * - C = Cherbourg (0.25)
+ * - Q = QueensTown (0.5)
+ * - S = Southampton (1.0)
  */
 
 public enum Embarked {
-    C, Q, S;
+    NULL, C, Q, S
 
 }

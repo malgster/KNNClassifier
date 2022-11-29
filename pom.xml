@@ -27,16 +27,12 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M7</version>
-			</plugin>
-			<plugin>
 				<groupId>org.openjfx</groupId>
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>0.0.8</version>
 				<configuration>
-					<mainClass>fr.univlille.iutinfo.r3_04.Main</mainClass>
+					<mainClass>view.Main</mainClass>
+					<executable>C:\Program Files\Java\jdk-19/bin/java</executable>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -45,18 +41,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-controls</artifactId>
-			<version>12.0.2</version>
-		</dependency>
-		<dependency>
-    <groupId>org.openjfx</groupId>
-    <artifactId>javafx-fxml</artifactId>
-    <version>11.0.1</version>
-</dependency>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-swing</artifactId>
-			<version>17</version>
+			<artifactId>javafx-fxml</artifactId>
+			<version>19</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -67,7 +53,7 @@
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>5.5</version>
+			<version>5.7.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -76,15 +62,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.4.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
-			<version>12.0.2</version>
+			<version>19</version>
 		</dependency>
 	</dependencies>
 

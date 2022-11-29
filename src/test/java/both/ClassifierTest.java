@@ -1,63 +1,98 @@
 package both;
 
-import static org.junit.jupiter.api.Assertions.*;
+import Distances.EuclidianDistance;
+import Normalizers.NullNormalizer;
+import Normalizers.NumberNormalizer;
+import dataInterfaces.IPoint;
+import iris.IrisRawData;
+import javafx.scene.paint.Color;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import utils.CsvLoader;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import Normalizers.EnumNormalizer;
-import Normalizers.NumberNormalizer;
-import dataInterfaces.IColumn;
-import iris.IrisRawData;
-import iris.IrisVariety;
-
+/**
+ * tests the classifier methods
+ */
 class ClassifierTest {
-	
-    String fileName= Paths.get(".").normalize().toAbsolutePath()+ File.separator+"ressources/iris.csv";
+
+    String fileName = Paths.get(".").normalize().toAbsolutePath() + File.separator + "src/main/resources/datasets/test_iris.csv";
     DataSet testDataSet = new DataSet("IrisSet", IrisRawData.class);
     Column sepalLength;
     Column sepalWidth;
     Column petalLength;
     Column petalWidth;
     Column variety;
-    Classifier c = new Classifier(testDataSet);
+    Column color;
+    Classifier c;
 
+    /**
+     * sets the dataset with its columns, its normalizer and its classifier
+     */
     @BeforeEach
-    void setUp(){
+    void setUp() {
         testDataSet.setMyPoints(CsvLoader.load(fileName, IrisRawData.class));
-        sepalLength = new Column("sepallength" , testDataSet);
-        sepalWidth = new Column("sepalwidth" , testDataSet);
-        petalLength = new Column("petallength" , testDataSet);
-        petalWidth = new Column("petalwidth" , testDataSet);
+        sepalLength = new Column("sepallength", testDataSet);
+        sepalWidth = new Column("sepalwidth", testDataSet);
+        petalLength = new Column("petallength", testDataSet);
+        petalWidth = new Column("petalwidth", testDataSet);
         variety = new Column("variety", testDataSet);
-        
+        color = new Column("color", testDataSet);
+
         //on set les normalizers, sinon nullPointer au getNormalizedValue
-        Column[] colonnes = new Column[] {sepalLength, sepalWidth, petalLength, petalWidth, variety};
         petalLength.setNormalizer(new NumberNormalizer(testDataSet.minValue(petalLength).doubleValue(), testDataSet.maxValue(petalLength).doubleValue()));
         petalWidth.setNormalizer(new NumberNormalizer(testDataSet.minValue(petalWidth).doubleValue(), testDataSet.maxValue(petalWidth).doubleValue()));
         sepalLength.setNormalizer(new NumberNormalizer(testDataSet.minValue(sepalLength).doubleValue(), testDataSet.maxValue(sepalLength).doubleValue()));
         sepalWidth.setNormalizer(new NumberNormalizer(testDataSet.minValue(sepalWidth).doubleValue(), testDataSet.maxValue(sepalWidth).doubleValue()));
-        variety.setNormalizer(new EnumNormalizer(IrisVariety.class));
-        
-        //on donne les colonnes au dataSet (sinon nullPointer à distance)
+        variety.setNormalizer(new NullNormalizer());
+        color.setNormalizer(new NullNormalizer());
+        Column[] colonnes = new Column[]{sepalLength, sepalWidth, petalLength, petalWidth, variety, color};
+
+
+        //on donne les colonnes au dataSet (sinon nullPointer Ã  distance)
         testDataSet.setColumns(colonnes);
+        testDataSet.setColumnClass(variety);
+        testDataSet.setAllColors();
+        c = new Classifier(testDataSet, testDataSet);
     }
 
-	/*@Test
-	void test_distance_non_normalisee_fonctionnelle() {
-		assertEquals(0.538,(c.distanceEuclidienne(testDataSet.getMyPoints().get(0), testDataSet.getMyPoints().get(1), testDataSet)));
-		assertEquals(0.699, (c.distanceManhatthan(testDataSet.getMyPoints().get(0), testDataSet.getMyPoints().get(1), testDataSet)));
-	}
+    /**
+     * tests if the expected closeNeighbours are found
+     */
+    @Test
+    void test_close_neighbours() {
+        List<IPoint> suspectedNeighbours = new ArrayList<IPoint>();
 
-	/*@Test
-	void test_distance_normalisee_fonctionnelle() {
-		assertEquals(0.150, (c.distanceManhatthanNormalisee(testDataSet.getMyPoints().get(1), testDataSet.getMyPoints().get(2), testDataSet)));
-		assertEquals(0.218, (c.distanceEuclidienneNormalisee(testDataSet.getMyPoints().get(0), testDataSet.getMyPoints().get(1), testDataSet)));
-	}*/
-	
+        suspectedNeighbours.add(testDataSet.getPoint(1));
+        suspectedNeighbours.add(testDataSet.getPoint(2));
+        suspectedNeighbours.add(testDataSet.getPoint(3));
 
+        List<? extends IPoint> neighbours = c.closeNeighbours(testDataSet.getPoint(0), 3, new EuclidianDistance());
+
+        assertEquals(3, neighbours.size());
+        assertEquals(suspectedNeighbours, neighbours);
+        assertEquals(testDataSet.getPoint(1), suspectedNeighbours.get(0));
+        assertEquals(testDataSet.getPoint(1).getColor(), suspectedNeighbours.get(0).getColor());
+    }
+
+
+    /**
+     * tests if the classify method changes a point's color
+     */
+    @Test
+    void test_classify() {
+        IPoint ird = testDataSet.getPoint(0);
+        c.classify(ird, c.closeNeighbours(ird, 3, new EuclidianDistance()));
+        assertNotEquals(ClassColor.NULL, ird.getColor());
+        assertEquals(ClassColor.BLUE, ird.getColor());
+        assertEquals(Color.BLUE, ird.getColor().getColor());
+    }
 
 }

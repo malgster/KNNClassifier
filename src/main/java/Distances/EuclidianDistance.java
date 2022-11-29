@@ -1,34 +1,27 @@
 package Distances;
 
 import Normalizers.EnumNormalizer;
-import Normalizers.NumberNormalizer;
-import both.Column;
-import both.CsvLoader;
 import both.DataSet;
-import dataInterfaces.IColumn;
 import dataInterfaces.IDistance;
 import dataInterfaces.IPoint;
-import iris.IrisRawData;
-import iris.IrisVariety;
 import utils.Format;
 
-import java.io.File;
 import java.math.RoundingMode;
-import java.nio.file.Paths;
 
+/**
+ * an euclidian distance used in the classifier which calculates a distance given 2 points and their datasets
+ */
 public class EuclidianDistance implements IDistance {
 
-
-
     @Override
-    public double calculateDistance(IPoint o1, IPoint o2, DataSet ds) {
+    public double calculateDistance(IPoint o1, IPoint o2, DataSet dsToClassify, DataSet ds2) {
         double res = 0;
-        for (IColumn col : ds.getColumns()) {
-            res += (EnumNormalizer.valueIsEnum(o1, col)) ?
-                    EnumNormalizer.finalNormalisation(o1, o2, col) :
-                    Math.pow(o1.getNormalizedValue(col) - o2.getNormalizedValue(col), 2);
-            }
-        return  Format.formatDouble(Math.sqrt(res),3, RoundingMode.FLOOR);
+        for (int i=0; i<dsToClassify.getColumnsWithoutClass().size(); i++) {
+            res += (EnumNormalizer.valueIsEnum(o1, dsToClassify.getColumn(i))) ?
+                    EnumNormalizer.finalNormalisation(o1, o2, dsToClassify.getColumn(i)) :
+                    Math.pow(o1.getNormalizedValue(dsToClassify.getColumn(i)) - o2.getNormalizedValue(ds2.getColumn(i)), 2);
+        }
+        return Format.formatDouble(Math.sqrt(res), 3, RoundingMode.FLOOR);
     }
 
 

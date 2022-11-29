@@ -2,23 +2,25 @@ package Distances;
 
 import Normalizers.EnumNormalizer;
 import both.DataSet;
-import dataInterfaces.IColumn;
 import dataInterfaces.IDistance;
 import dataInterfaces.IPoint;
 import utils.Format;
 
 import java.math.RoundingMode;
 
+/**
+ * calculates a manhattan distance given two points and their dataset
+ */
 public class ManhatthanDistance implements IDistance {
 
     @Override
-    public double calculateDistance(IPoint o1, IPoint o2, DataSet ds) {
+    public double calculateDistance(IPoint o1, IPoint o2, DataSet dsToClassify , DataSet baseDs) {
         double res = 0;
-        for (IColumn col : ds.getColumns()) {
-                res += (EnumNormalizer.valueIsEnum(o1, col)) ?
-                    EnumNormalizer.finalNormalisation(o1, o2, col) :
-                    Math.abs(o1.getNormalizedValue(col) - o2.getNormalizedValue(col));
-            }
+        for (int i=0; i<dsToClassify.getColumnsWithoutClass().size(); i++) {
+            res += (EnumNormalizer.valueIsEnum(o1, dsToClassify.getColumn(i))) ?
+                    EnumNormalizer.finalNormalisation(o1, o2, dsToClassify.getColumn(i)) :
+                    Math.abs(o1.getNormalizedValue(dsToClassify.getColumn(i)) - o2.getNormalizedValue(baseDs.getColumn(i)));
+        }
         return Format.formatDouble(res, 3, RoundingMode.FLOOR);
     }
 }

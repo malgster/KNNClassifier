@@ -4,34 +4,60 @@
 
 Color Tints :
 
-Cyan
+Untoned :
+8-#808080
 
-100 = #00ffa8
-90  = #1affb1
-60  = #66ffcb
-30  = #b3ffe5
-10  = #e5fff6
-0   = #ffffff
+Tint :
+7-#909090
+6-#a0a0a0
+5-#b0b0b0
+4-#c0c0c0
+3-#cfcfcf
+2-#dfdfdf
+1-#efefef
+0-#ffffff
 
-Gray
+Shade :
+7-#707070
+6-#606060
+5-#505050
+4-#404040
+3-#303030
+2-#202020
+1-#101010
+0-#000000
 
-100 = #808080
-90  = #8d8d8d
-60  = #b3b3b3
-30  = #d9d9d9
-10  = #f2f2f2
-0   = #ffffff
+Purple :
+8-#C000FF
 
-Purple
+7-#c820ff
+6-#d040ff
+5-#d860ff
+4-#e080ff
+3-#e79fff
+2-#efbfff
+1-#f7dfff
 
-100 = #9600ff
-90  = #a01aff
-60  = #c066ff
-30  = #dfb3ff
-10  = #f4e5ff
-0   = #ffffff
+Blue :
+8-#00C0FF
+7-#20c8ff
+6-#40d0ff
+5-#60d8ff
+4-#80e0ff
+3-#9fe7ff
+2-#bfefff
+1-#dff7ff
 
 
+Aqua :
+8-#00FFC0
+7-#20ffc8
+6-#40ffd0
+5-#60ffd8
+4-#80ffe0
+3-#9fffe7
+2-#bfffef
+1-#dffff7
 
 -----------------------------------------
 

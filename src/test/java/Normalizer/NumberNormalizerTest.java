@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * tests the number normalizers
+ */
 public class NumberNormalizerTest {
 
 
@@ -16,18 +19,24 @@ public class NumberNormalizerTest {
     NumberNormalizer numNorm;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         numNorm = new NumberNormalizer(min, max);
     }
 
+    /**
+     * test normalize method for the min and the max
+     */
     @Test
-    void number_normalizer_normalize_test(){
+    void number_normalizer_normalize_test() {
         assertEquals(0.75, numNorm.normalize(5.1));
         assertEquals(0.70, numNorm.normalize(4.9));
         assertEquals(0.41, numNorm.normalize(3.5));
         assertEquals(0.27, numNorm.normalize(2.8));
     }
 
+    /**
+     * test denormalize method for the min and the max
+     */
     @Test
     void number_normalizer_denormalize_test() {
         assertEquals(5.1, numNorm.denormalize(0.75));
