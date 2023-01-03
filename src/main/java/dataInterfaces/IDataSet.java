@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface IDataSet extends Iterable<IPoint> {
 
+    void setColumns(List<IColumn> columns);
+
     /**
      * Le nom du DataSet ex: Titanic, Iris, Pokemon, ...
      */
@@ -28,6 +30,10 @@ public interface IDataSet extends Iterable<IPoint> {
      * Ajoute une collection de donnees dans le DataSet
      */
     void addAllLine(List<IPoint> element);
+
+    void setColumns(IColumn... colonnes);
+
+    List<IColumn> getColumns();
 
     void setAllColors();
 

@@ -83,4 +83,9 @@ public class EnumNormalizerTest {
         assertEquals(Embarked.S, embarkedNorm.denormalize(1.0));
 
     }
+
+    @Test
+    void enum_string_value_test(){
+        assertEquals("enum", genderNorm.stringValue());
+    }
 }

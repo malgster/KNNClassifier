@@ -83,7 +83,7 @@
                     <left>
                         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                             <children>
-                                <Button fx:id="ImporterButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleImporterButtonAction" styleClass="classicButton" text="Importer" textFill="WHITE">
+                                <Button fx:id="importerButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="classicButton" text="Importer" textFill="WHITE">
                                     <VBox.margin>
                                         <Insets bottom="12.0" left="24.0" right="12.0" top="12.0" />
                                     </VBox.margin>
@@ -143,7 +143,7 @@
                                 </Button>
                                 <VBox alignment="CENTER" styleClass="pane" VBox.vgrow="ALWAYS">
                                     <children>
-                                        <Label fx:id="selectedPointLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Lbl_selected_point" textAlignment="CENTER">
+                                        <Label fx:id="selectedPointLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="" textAlignment="CENTER">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
@@ -180,7 +180,7 @@
         </VBox>
         <VBox fx:id="scatterVBox" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E200" minHeight="-Infinity" minWidth="-Infinity" styleClass="pane" HBox.hgrow="ALWAYS">
             <children>
-                <ScatterChart fx:id="scatterChart" onMousePressed="#handlePressed" onScroll="#handleScroll" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="ALWAYS">
+                <ScatterChart fx:id="scatterChart" onScroll="#handleScroll" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="ALWAYS">
                     <xAxis>
                         <NumberAxis fx:id="abscisseLabel" label="Lbl_category1" onMouseClicked="#handleXClicked" side="BOTTOM" styleClass="label" />
                     </xAxis>

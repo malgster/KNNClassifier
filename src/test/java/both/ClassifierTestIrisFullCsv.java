@@ -74,21 +74,8 @@ class ClassifierTestIrisFullCsv {
             pointsATester.add(point);
 
         }
-        // si jamais, c'est normal d'avoir 100 de robustesse ici car on a prit que 10 du dataset
-<<<<<<< HEAD
-        assertEquals(100, c.robustness(5, new EuclidianDistance(), pointsATester));
-        assertTrue(c.robustness(5, new EuclidianDistance()) > 90);
-        System.out.println(c.robustness(5, new EuclidianDistance()));
-
         double robustesse = c.robustness(5, new EuclidianDistance());
-        System.out.println(robustesse);
         assertTrue(robustesse != 100 && robustesse>90 );
-
-=======
-        double robustesse = c.robustness(5, new EuclidianDistance());
-        System.out.println(robustesse);
-        assertTrue(robustesse != 100 && robustesse>90 );
->>>>>>> 86b1c94e2db9285aded7703350f5908d094327ed
     }
 
 

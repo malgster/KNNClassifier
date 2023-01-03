@@ -15,10 +15,10 @@ import java.util.Iterator;
  */
 public class EnumNormalizer implements IValueNormalizer {
 
-    private final Class<? extends Enum> enumClass;
+    private final Class<? extends Enum> ENUMCLASS;
 
     public EnumNormalizer(final Class<? extends Enum> enumClass) {
-        this.enumClass = enumClass;
+        this.ENUMCLASS = enumClass;
     }
 
 
@@ -47,7 +47,7 @@ public class EnumNormalizer implements IValueNormalizer {
     }
 
     private <E extends Enum> Enum castByOrdinal(Double ordinal) {
-        final Iterator<E> iter = EnumSet.allOf(enumClass).iterator();
+        final Iterator<E> iter = EnumSet.allOf(ENUMCLASS).iterator();
         int count = 0;
         E eValue = null;
         while (count <= ordinal.intValue()) {
@@ -61,7 +61,7 @@ public class EnumNormalizer implements IValueNormalizer {
     }
 
     public final double getNumberOfElements() {
-        return EnumSet.allOf(enumClass).size();
+        return EnumSet.allOf(ENUMCLASS).size();
     }
 
 }

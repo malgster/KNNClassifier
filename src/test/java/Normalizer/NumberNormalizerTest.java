@@ -45,5 +45,10 @@ public class NumberNormalizerTest {
         assertEquals(2.8, numNorm.denormalize(0.27));
     }
 
+    @Test
+    void number_string_value_test(){
+        assertEquals("number", numNorm.stringValue());
+    }
+
 
 }

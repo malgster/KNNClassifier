@@ -1,210 +1,202 @@
 package view;
 
+import both.DataSet;
 import dataInterfaces.IPoint;
 import iris.IrisVariety;
-import javafx.event.EventHandler;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.input.ScrollEvent;
 
 public class CreateChart {
+    private final BaseChart baseChart = new BaseChart(this);
+
+    public MainView getMainView() {
+        return mainView;
+    }
+
     private final MainView mainView;
+    private final HandleChart handleChart = new HandleChart(this);
 
     public CreateChart(MainView mainView) {
         this.mainView = mainView;
     }
 
-    void createChartIris() {
+    void createChartIris(DataSet ds, int val) {
         //Iris series
-        XYChart.Series series1 = new XYChart.Series();
-        XYChart.Series series2 = new XYChart.Series();
-        XYChart.Series series3 = new XYChart.Series();
-        series1.setName("Setosa");
-        series3.setName("Versicolor");
-        series2.setName("Virginica");
-        for (IPoint myPoint : Main.modele.getBaseDataSet().getMyPoints()) {
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("variety")).equals(IrisVariety.SETOSA)) {
-                series1.getData().add(
-                        new XYChart.Data<Double, Double>(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
+        baseChart.createBaseChartIris(ds, val);
+        MainView.nbScatterChartSeries=3;
+        if(val==1){
+            XYChart.Series series4 = new XYChart.Series();
+            XYChart.Series series5 = new XYChart.Series();
+            XYChart.Series series6 = new XYChart.Series();
+            MainView.nbScatterChartSeries=6;
+            series4.setName("SetosaClassified");
+            series5.setName("VersicolorClassified");
+            series6.setName("VirginicaClassified");
+            for (IPoint myPoint : Main.modelClassifier.getDataSet().getMyPoints()) {
+                if (myPoint.getValue(Main.modelClassifier.getDataSet().getColumn("variety")).equals(IrisVariety.SETOSA)) {
+                    series4.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint
+                            )
+                    );
+                }
+                if (myPoint.getValue(Main.modelClassifier.getDataSet().getColumn("variety")).equals(IrisVariety.VERSICOLOR)) {
+                    series5.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint)
+                    );
+                }
+                if (myPoint.getValue(Main.modelClassifier.getDataSet().getColumn("variety")).equals(IrisVariety.VIRGINICA)) {
+                    series6.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint
+                            )
+                    );
+                }
             }
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("variety")).equals(IrisVariety.VERSICOLOR)) {
-                series3.getData().add(
-                        new XYChart.Data<Double, Double>(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint)
-                );
-            }
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("variety")).equals(IrisVariety.VIRGINICA)) {
-                series2.getData().add(
-                        new XYChart.Data<Double, Double>(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
-            }
+            mainView.getController().scatterChart.getData().addAll(series4, series5, series6);
+            mainView.getController().abscisseLabel.setLabel(Main.modele.getAxeX().getName());
+            mainView.getController().ordonneLabel.setLabel(Main.modele.getAxeY().getName());
+            mainView.getController().setListenerClickSeries(series4, val);
+            mainView.getController().setListenerClickSeries(series5, val);
+            mainView.getController().setListenerClickSeries(series6, val);
         }
-        mainView.getController().scatterChart.getData().clear();
-        mainView.getController().scatterChart.getData().addAll(series1, series3, series2);
-        mainView.getController().abscisseLabel.setLabel(Main.modele.getAxeX().getName());
-        mainView.getController().ordonneLabel.setLabel(Main.modele.getAxeY().getName());
+        if(val==2){
+            XYChart.Series series4 = new XYChart.Series();
+            XYChart.Series series5 = new XYChart.Series();
+            XYChart.Series series6 = new XYChart.Series();
+            MainView.nbScatterChartSeries=6;
+            series4.setName("SetosaRobustness");
+            series5.setName("VersicolorRobustness");
+            series6.setName("VirginicaRobustness");
+            for (IPoint myPoint : Main.modelRobustesse.getDataSet().getMyPoints()) {
+                if (myPoint.getValue(Main.modelRobustesse.getDataSet().getColumn("variety")).equals(IrisVariety.SETOSA)) {
+                    series4.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint
+                            )
+                    );
+                }
+                if (myPoint.getValue(Main.modelRobustesse.getDataSet().getColumn("variety")).equals(IrisVariety.VERSICOLOR)) {
+                    series5.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint)
+                    );
+                }
+                if (myPoint.getValue(Main.modelRobustesse.getDataSet().getColumn("variety")).equals(IrisVariety.VIRGINICA)) {
+                    series6.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(ds.getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint
+                            )
+                    );
+                }
+            }
+            mainView.getController().scatterChart.getData().addAll(series4, series5, series6);
+            mainView.getController().abscisseLabel.setLabel(Main.modele.getAxeX().getName());
+            mainView.getController().ordonneLabel.setLabel(Main.modele.getAxeY().getName());
+            mainView.getController().setListenerClickSeries(series4, val);
+            mainView.getController().setListenerClickSeries(series5, val);
+            mainView.getController().setListenerClickSeries(series6, val);
+        }
 
-        mainView.setListenerClickSeries(series1);
-        mainView.setListenerClickSeries(series2);
-        mainView.setListenerClickSeries(series3);
     }
 
-    void createChartIrisHorsFXML() {
-        //Iris series
-        XYChart.Series series1 = new XYChart.Series();
-        XYChart.Series series2 = new XYChart.Series();
-        XYChart.Series series3 = new XYChart.Series();
-        series1.setName("Setosa");
-        series3.setName("Versicolor");
-        series2.setName("Virginica");
-        for (IPoint myPoint : Main.modele.getBaseDataSet().getMyPoints()) {
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("variety")).equals(IrisVariety.SETOSA)) {
-                series1.getData().add(
-                        new XYChart.Data<Double, Double>(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
-            }
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("variety")).equals(IrisVariety.VERSICOLOR)) {
-                series3.getData().add(
-                        new XYChart.Data<Double, Double>(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint)
-                );
-            }
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("variety")).equals(IrisVariety.VIRGINICA)) {
-                series2.getData().add(
-                        new XYChart.Data<Double, Double>(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
-            }
-        }
-        mainView.scatterChart.getData().clear();
-        mainView.scatterChart.getData().addAll(series1, series3, series2);
-        mainView.abscisseLabel.setLabel(Main.modele.getAxeX().getName());
-        mainView.ordonneLabel.setLabel(Main.modele.getAxeY().getName());
-
-        mainView.setListenerClickSeries(series1);
-        mainView.setListenerClickSeries(series2);
-        mainView.setListenerClickSeries(series3);
+    void createBaseChartIris(DataSet ds, int val){
+        baseChart.createBaseChartIris(ds, val);
     }
 
-    void createChartTitanic() {
-        XYChart.Series series1 = new XYChart.Series();
-        XYChart.Series series2 = new XYChart.Series();
-
-        series1.setName("Survived");
-        series2.setName("RIP");
-        for (IPoint myPoint : Main.modele.getBaseDataSet().getMyPoints()) {
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("survived")).equals(true)) {
-                series1.getData().add(
-                        new XYChart.Data(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
-            }
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("survived")).equals(false)) {
-                series2.getData().add(
-                        new XYChart.Data(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
-            }
-        }
-        mainView.getController().scatterChart.getData().clear();
-        mainView.getController().scatterChart.getData().addAll(series1, series2);
-        mainView.getController().abscisseLabel.setLabel(Main.modele.getAxeX().getName());
-        mainView.getController().ordonneLabel.setLabel(Main.modele.getAxeY().getName());
-        mainView.setListenerClickSeries(series1);
-        mainView.setListenerClickSeries(series2);
+    void createBaseChartTitanic(DataSet ds, int val){
+       baseChart.createBaseChartTitanic(ds, val);
     }
-    void createChartTitanicHorsFXML() {
-        XYChart.Series series1 = new XYChart.Series();
-        XYChart.Series series2 = new XYChart.Series();
 
-        series1.setName("Survived");
-        series2.setName("RIP");
-        for (IPoint myPoint : Main.modele.getBaseDataSet().getMyPoints()) {
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("survived")).equals(true)) {
-                series1.getData().add(
-                        new XYChart.Data(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
+    void createChartTitanic(DataSet ds, int val) {
+
+        createBaseChartTitanic(ds, val);
+        MainView.nbScatterChartSeries=2;
+        if(val==1){
+            XYChart.Series series3 = new XYChart.Series();
+            XYChart.Series series4 = new XYChart.Series();
+            MainView.nbScatterChartSeries=4;
+            series3.setName("SurvivedClassified");
+            series4.setName("RIPClassified");
+            for (IPoint myPoint : Main.modelClassifier.getDataSet().getMyPoints()) {
+                if (myPoint.getValue(Main.modelClassifier.getDataSet().getColumn("survived")).equals(true)) {
+                    series3.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(Main.modelClassifier.getDataSet().getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(Main.modelClassifier.getDataSet().getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint
+                            )
+                    );
+                }
+                if (myPoint.getValue(Main.modelClassifier.getDataSet().getColumn("survived")).equals(false)) {
+                    series4.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(Main.modelClassifier.getDataSet().getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(Main.modelClassifier.getDataSet().getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint)
+                    );
+                }
             }
-            if (myPoint.getValue(Main.modele.getBaseDataSet().getColumn("survived")).equals(false)) {
-                series2.getData().add(
-                        new XYChart.Data(
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeX().getName())),
-                                myPoint.getNormalizedValue(Main.modele.getBaseDataSet().getColumn(Main.modele.getAxeY().getName())),
-                                myPoint
-                        )
-                );
-            }
+            mainView.getController().scatterChart.getData().addAll(series3, series4);
+            mainView.getController().abscisseLabel.setLabel(Main.modele.getAxeX().getName());
+            mainView.getController().ordonneLabel.setLabel(Main.modele.getAxeY().getName());
+            mainView.setListenerClickSeries(series3, val);
+            mainView.setListenerClickSeries(series4, val);
         }
-        mainView.scatterChart.getData().clear();
-        mainView.scatterChart.getData().addAll(series1, series2);
-        mainView.abscisseLabel.setLabel(Main.modele.getAxeX().getName());
-        mainView.ordonneLabel.setLabel(Main.modele.getAxeY().getName());
-        mainView.setListenerClickSeries(series1);
-        mainView.setListenerClickSeries(series2);
+        if(val==2){
+            XYChart.Series series3 = new XYChart.Series();
+            XYChart.Series series4 = new XYChart.Series();
+            MainView.nbScatterChartSeries=4;
+            series3.setName("SurvivedRobustness");
+            series4.setName("RIPRobustness");
+            for (IPoint myPoint : Main.modelRobustesse.getDataSet().getMyPoints()) {
+                if (myPoint.getValue(Main.modelRobustesse.getDataSet().getColumn("survived")).equals(true)) {
+                    series3.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(Main.modelRobustesse.getDataSet().getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(Main.modelRobustesse.getDataSet().getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint
+                            )
+                    );
+                }
+                if (myPoint.getValue(Main.modelRobustesse.getDataSet().getColumn("survived")).equals(false)) {
+                    series4.getData().add(
+                            new XYChart.Data<Double, Double>(
+                                    myPoint.getNormalizedValue(Main.modelRobustesse.getDataSet().getColumn(Main.modele.getAxeX().getName())),
+                                    myPoint.getNormalizedValue(Main.modelRobustesse.getDataSet().getColumn(Main.modele.getAxeY().getName())),
+                                    myPoint)
+                    );
+                }
+            }
+            mainView.getController().scatterChart.getData().addAll(series3, series4);
+            mainView.getController().abscisseLabel.setLabel(Main.modele.getAxeX().getName());
+            mainView.getController().ordonneLabel.setLabel(Main.modele.getAxeY().getName());
+            mainView.setListenerClickSeries(series3, val);
+            mainView.setListenerClickSeries(series4, val);
+        }
     }
 
     void mouseOverGlow(NumberAxis n){
-        final Effect glow = new DropShadow(10, Color.GOLDENROD);
-        n.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                n.setEffect(glow);
-            }
-        });
-        n.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                n.setEffect(null);
-            }
-        });
+        handleChart.mouseOverGlow(n);
     }
-    void mouseOverGlow(XYChart.Data n){
-        final Effect glow = new DropShadow(15, Color.PURPLE);
-        n.getNode().setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                n.getNode().setEffect(glow);
-            }
-        });
-        n.getNode().setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                n.getNode().setEffect(null);
-            }
-        });
+
+    void handleScrollChart(ScrollEvent event) {
+        handleChart.handleScrollChart(event);
     }
+
 
 }

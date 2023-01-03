@@ -130,13 +130,18 @@
 }
 
 #labelDataset {
-    <font-weight>: normal;
+    font-weight: normal;
 }
 
 #labelClassifier {
-    <font-weight>: normal;
+    font-weight: normal;
 }
 
 #labelRobustesse {
-    <font-weight>: bold;
+    font-weight: bold;
+}
+
+.chart-symbol {
+    -fx-shape: "M 0 0 A 1 1 0 0 0 2 0 A 1 1 0 0 0 0 0 Z";
+    -fx-padding: 4px 4px 4px 4px;
 }

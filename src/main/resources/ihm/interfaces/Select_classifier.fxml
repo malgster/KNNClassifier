@@ -11,19 +11,19 @@
         <VBox alignment="CENTER_LEFT" fillWidth="false" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
               VBox.vgrow="ALWAYS">
             <children>
-                <RadioButton mnemonicParsing="false" fx:id="RadioButtonIris" text="Iris">
+                <RadioButton mnemonicParsing="false" fx:id="radioButtonIris" text="Iris">
                     <VBox.margin>
                         <Insets bottom="6.0" top="12.0"/>
                     </VBox.margin>
                 </RadioButton>
-                <RadioButton mnemonicParsing="false" fx:id="RadioButtonTitanic" text="Titanic">
+                <RadioButton mnemonicParsing="false" fx:id="radioButtonTitanic" text="Titanic">
                     <VBox.margin>
                         <Insets bottom="12.0" top="6.0"/>
                     </VBox.margin>
                 </RadioButton>
             </children>
         </VBox>
-        <Button alignment="CENTER" contentDisplay="CENTER" fx:id="ButtonSubmit" onMouseClicked="#handleSubmit"
+        <Button alignment="CENTER" contentDisplay="CENTER" fx:id="buttonSubmit" onMouseClicked="#handleSubmit"
                 maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="OK">
             <VBox.margin>
                 <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>

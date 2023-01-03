@@ -20,14 +20,18 @@ class NullNormalizerTest {
     }
 
     @Test
-    void null_normalize() {
+    void null_normalize_test() {
         assertEquals(0.0, quelconque.normalize("Hello"));
 
     }
 
     @Test
-    void null_denormalize() {
+    void null_denormalize_test() {
         assertEquals(17.0, quelconque.denormalize(17.0));
     }
 
+    @Test
+    void null_string_value_test(){
+        assertEquals("null", quelconque.stringValue());
+    }
 }

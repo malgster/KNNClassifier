@@ -20,6 +20,7 @@ public class AttributeYView extends Application {
     @FXML
     private ChoiceBox choiceY;
 
+
     /**
      * form to choose the y attribute in the scatterChart
      * @param mainStage the primary stage for this application, onto which
@@ -40,7 +41,7 @@ public class AttributeYView extends Application {
         mainStage.setTitle("Choisir l'attribut de l'axe des ordonnées");
         mainStage.setResizable(false);
         mainStage.setScene(scene);
-        List<IColumn> values = Main.modele.getBaseDataSet().getColumns();
+        List<IColumn> values = Main.modele.ds().getColumns();
         List<String> noms = new ArrayList<>();
         for (IColumn c : values) {
             if(c.isNormalizable()) {
@@ -57,7 +58,9 @@ public class AttributeYView extends Application {
      * called when the button ok is pressed
      */
     public void handleOk(ActionEvent actionEvent) {
-        Main.modele.setAxeY(Main.modele.getBaseDataSet().getColumn((String) choiceY.getSelectionModel().getSelectedItem()));
+        Main.modele.setAxeY(Main.modele.ds().getColumn((String) choiceY.getSelectionModel().getSelectedItem()));
+        Main.modelClassifier.setAxeY(Main.modele.ds().getColumn((String) choiceY.getSelectionModel().getSelectedItem()));
+        Main.modelRobustesse.setAxeY(Main.modele.ds().getColumn((String) choiceY.getSelectionModel().getSelectedItem()));
         Stage stage = (Stage) choiceY.getScene().getWindow();
         stage.close();
     }

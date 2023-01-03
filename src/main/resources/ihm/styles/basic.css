@@ -197,3 +197,8 @@
 #labelRobustesse {
     font-weight: -selected-robustesse;
 }
+
+.chart-symbol {
+    -fx-shape: "M 0 0 A 1 1 0 0 0 2 0 A 1 1 0 0 0 0 0 Z";
+    -fx-padding: 4px 4px 4px 4px;
+}

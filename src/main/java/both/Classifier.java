@@ -1,6 +1,5 @@
 package both;
 
-import dataInterfaces.IColumn;
 import dataInterfaces.IDistance;
 import dataInterfaces.IPoint;
 
@@ -52,12 +51,12 @@ public class Classifier {
      *
      * @return
      */
-    private HashMap<ClassColor, Integer> initializeColorMap() {
-        HashMap<ClassColor, Integer> colorMap = new HashMap<>();
-        colorMap.put(ClassColor.RED, 0);
-        colorMap.put(ClassColor.BLUE, 0);
-        colorMap.put(ClassColor.GREEN, 0);
-        colorMap.put(ClassColor.NULL, 0);
+    private HashMap<GenClass, Integer> initializeClassMap() {
+        HashMap<GenClass, Integer> colorMap = new HashMap<>();
+        colorMap.put(GenClass.FIRSTCLASS, 0);
+        colorMap.put(GenClass.SECONDCLASS, 0);
+        colorMap.put(GenClass.THIRDCLASS, 0);
+        colorMap.put(GenClass.NULL, 0);
         return colorMap;
     }
 
@@ -68,8 +67,8 @@ public class Classifier {
      * @param result
      * @return
      */
-    private boolean thereIsAnotherEqual(HashMap<ClassColor, Integer> colorMap, ClassColor result, int resultvalue, IPoint p) {
-        for (ClassColor cc : colorMap.keySet()) {
+    private boolean thereIsAnotherEqual(HashMap<GenClass, Integer> colorMap, GenClass result, int resultvalue, IPoint p) {
+        for (GenClass cc : colorMap.keySet()) {
             if (!cc.equals(result) && colorMap.get(cc) == resultvalue) return true;
         }
         return false;
@@ -83,23 +82,23 @@ public class Classifier {
      * @param closeNeighbour
      */
     public boolean classify(IPoint addedPoint, List<? extends IPoint> closeNeighbour) {
-        HashMap<ClassColor, Integer> colorMap = initializeColorMap();
+        HashMap<GenClass, Integer> colorMap = initializeClassMap();
         for (IPoint i : closeNeighbour) {
-            if (i.getColor() != ClassColor.NULL) {
-                ClassColor cc = i.getColor();
+            if (i.getPointGenClass() != GenClass.NULL) {
+                GenClass cc = i.getPointGenClass();
                 colorMap.put(cc, (colorMap.get(cc) + 1));
             }
         }
-        ClassColor result = Collections.max(colorMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+        GenClass result = Collections.max(colorMap.entrySet(), Map.Entry.comparingByValue()).getKey();
         int resultValue = colorMap.get(result);
 
         // si on ne peut pas départager on prend le point le plus proche
         if (thereIsAnotherEqual(colorMap, result, resultValue, addedPoint))
-            result = closeNeighbour.get(0).getColor();
+            result = closeNeighbour.get(0).getPointGenClass();
 
-        ClassColor temp = addedPoint.getColor();
-        addedPoint.setColor(result);
-        addedPoint.setClassFromColor();
+        GenClass temp = addedPoint.getPointGenClass();
+        addedPoint.setPointGenClass(result);
+        addedPoint. setRealClassFromGenClass();
 
         this.dsToClassify.addLine(addedPoint); // on pourra réafficher le dataSet avec le nouveau point
 
@@ -120,22 +119,6 @@ public class Classifier {
             if (classify(i, closests)) res++;
         }
         return res * 100 / dsToClassify.getNbLines();
-    }
-
-    /**
-     * surcharge de la méthode robustesse, utilisé pour la classe test
-     * @param k
-     * @param choosenDistance
-     * @param pointsATester
-     * @return
-     */
-    public double robustness(int k, IDistance choosenDistance, List<? extends IPoint> pointsATester) {
-        int res = 0;
-        for (IPoint i : pointsATester) {
-            List<? extends IPoint> closests = closeNeighbours(i, k, choosenDistance);
-            if (classify(i, closests)) res++;
-        }
-        return res * 100 / pointsATester.size();
     }
 
 

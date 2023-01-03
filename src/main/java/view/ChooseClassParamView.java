@@ -6,19 +6,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 public class ChooseClassParamView extends Application {
 
     ChooseClassParamView controller;
-    @FXML
-    private VBox vBoxAttributes;
-    @FXML
-    private List<TextField> formulaires;
+
+    @FXML private ChoiceBox<String> chooseDistance;
+
+    @FXML private TextField kValues;
 
     @Override
     public void start(Stage mainStage) throws Exception {
@@ -35,13 +34,20 @@ public class ChooseClassParamView extends Application {
         mainStage.setTitle("Choisir les parametres");
         mainStage.setResizable(false);
         mainStage.setScene(scene);
+        controller.chooseDistance.getItems().add("Manhathan");
+        controller.chooseDistance.getItems().add("Euclidian");
 
         //affichage de l'interface
         mainStage.show();
     }
 
     public void handleOk(ActionEvent actionEvent) {
-        //handle du bouton ok
-
+        if(MainView.sliderValueInt==1) {
+            Main.modelClassifier.classifyModel(chooseDistance.getSelectionModel().getSelectedItem().toString(), kValues.getText());
+        }else if(MainView.sliderValueInt==2){
+            Main.modelRobustesse.robustnessModel(chooseDistance.getSelectionModel().getSelectedItem().toString(), kValues.getText());
+        }
+        Stage stage = (Stage) kValues.getScene().getWindow();
+        stage.close();
     }
 }

@@ -1,0 +1,10 @@
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+960,0,3,Charles Toppotez,male,22,1,0,A/5 21171,7.25,,S
+1028,1,1,Malak Hayar,female,38,1,0,PC 17599,71.2833,C85,C
+963,1,3,Lea Bedrici,female,26,0,0,STON/O2.3101282,7.925,,S
+1020,0,3,Gwendal Margely,male,35,0,0,373450,8.05,,S
+982,1,1,Patricia Everaere,female,35,1,0,113803,53.1,C123,S
+3012,1,3,Fabien Delecroix,male,,0,0,330877,8.4583,,Q
+1502,1,3,Iovka Boneva,female,27,0,2,347742,11.1333,,S
+1403,1,2,Nicolas Anquetil,male,14,1,0,237736,30.0708,,C
+1420,1,3,Marie Deletombe,female,4,1,1,PP 9549,16.7,G6,S

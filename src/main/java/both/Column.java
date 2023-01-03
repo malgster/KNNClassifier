@@ -84,31 +84,6 @@ public class Column implements IColumn {
         return !normalizer.getClass().equals(NullNormalizer.class);
     }
 
-    /**
-     * @return the column's minValue in the dataset
-     */
-    public double getMin() {
-        double min = (double) itsDataSet.getValue(0, this);
-        double temp;
-        for (IPoint i : itsDataSet) {
-            temp = (double) i.getValue(this);
-            if (temp < min) min = temp;
-        }
-        return min;
-    }
-
-    /**
-     * @return the column's maxValue in the dataset
-     */
-    public double getMax() {
-        double max = (double) itsDataSet.getValue(0, this);
-        double temp;
-        for (IPoint i : itsDataSet) {
-            temp = (double) i.getValue(this);
-            if (temp > max) max = temp;
-        }
-        return max;
-    }
 
 
 }

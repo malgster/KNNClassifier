@@ -1,5 +1,6 @@
 package both;
 
+import Normalizers.EnumNormalizer;
 import iris.IrisRawData;
 import iris.IrisVariety;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +10,7 @@ import utils.CsvLoader;
 import java.io.File;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * tests the values of the attributes for iris
@@ -39,6 +39,8 @@ public class ColumnIrisTest {
         variety = new Column("variety", testDataSet);
         nulle = new Column("nulle", testDataSet);
 
+        variety.setNormalizer(new EnumNormalizer(IrisVariety.class));
+
     }
 
 
@@ -62,6 +64,27 @@ public class ColumnIrisTest {
         assertNull(testDataSet.getPoint(0).getValue(nulle));
 
     }
+
+    @Test
+    void is_normalizable_test(){
+        assertFalse(nulle.isNormalizable());
+        assertTrue(variety.isNormalizable());
+    }
+
+    @Test
+    void get_dataset_test(){
+        assertEquals(testDataSet, sepalLength.getDataset());
+        assertEquals(testDataSet, variety.getDataset());
+    }
+
+    @Test
+    void get_name_test(){
+        assertEquals("sepallength", sepalLength.getName());
+        assertEquals("petallength", petalLength.getName());
+        assertEquals("petalwidth", petalWidth.getName());
+    }
+
+
 
 
 }

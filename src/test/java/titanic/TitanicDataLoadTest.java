@@ -9,7 +9,7 @@ import utils.CsvLoader;
 import java.io.File;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * tests if the csvLoad works for titanic
@@ -30,6 +30,14 @@ public class TitanicDataLoadTest {
         assertNotNull(testDataSet.getPoint(15));
         assertNotNull(testDataSet.getPoint(53));
         assertNotNull(testDataSet.getPoint(87));
+    }
+
+    @Test
+    void test_titanic_constructor_test(){
+        TitanicRawData trd = new TitanicRawData(1,true,3,"test",Gender.FEMALE,23.0,2,3,"RR","ZR",34.0,Embarked.Q);
+        assertEquals(1, trd.passengerId);
+        assertTrue(trd.survived);
+        assertEquals("test", trd.name);
     }
 
 }

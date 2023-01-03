@@ -14,6 +14,8 @@ import titanic.Embarked;
 import titanic.Gender;
 import titanic.TitanicRawData;
 import utils.CsvLoader;
+import view.Main;
+import view.MainView;
 
 import java.util.List;
 
@@ -30,7 +32,6 @@ public class Model extends Subject {
     List<String> formulaireValeurs;
     private IPoint selectedPoint;
 
-
     public Model() {
     }
 
@@ -45,19 +46,19 @@ public class Model extends Subject {
 
     public void setFormulaireValeurs(List<String> formulaireValeurs) {
         this.formulaireValeurs = formulaireValeurs;
-        if (this.getBaseDataSet().getTitle().equals("IrisSet")) {
+        if (this.ds().getTitle().equals("IrisSet")) {
             IrisRawData newPoint = new IrisRawData(Double.parseDouble(formulaireValeurs.get(0)), Double.parseDouble(formulaireValeurs.get(1)), Double.parseDouble(formulaireValeurs.get(2)), Double.parseDouble(formulaireValeurs.get(3)), IrisVariety.valueOf(formulaireValeurs.get(4).toUpperCase()));
-            newPoint.setColor();
-            this.getBaseDataSet().addLine(newPoint);
-            for (IColumn c : this.getBaseDataSet().getColumnsWithoutClass()) {
+            newPoint.setPointGenClass();
+            this.ds().addLine(newPoint);
+            for (IColumn c : this.ds().getColumnsWithoutClass()) {
                 c.setNormalizer(new NumberNormalizer(baseDataSet.minValue(c).doubleValue(), baseDataSet.maxValue(c).doubleValue()));
             }
         }
-        if (this.getBaseDataSet().getTitle().equals("TitanicSet")) {
+        if (this.ds().getTitle().equals("TitanicSet")) {
             TitanicRawData newPoint = new TitanicRawData(Integer.parseInt(formulaireValeurs.get(0)), Boolean.parseBoolean(formulaireValeurs.get(11)), Integer.parseInt(formulaireValeurs.get(1)), formulaireValeurs.get(2), Gender.valueOf(formulaireValeurs.get(9).toUpperCase()), Double.parseDouble(formulaireValeurs.get(3)), Integer.parseInt(formulaireValeurs.get(4)), Integer.parseInt(formulaireValeurs.get(5)), formulaireValeurs.get(6), formulaireValeurs.get(7), Double.parseDouble(formulaireValeurs.get(8)), Embarked.valueOf(formulaireValeurs.get(10).toUpperCase()));
-            newPoint.setColor();
-            this.getBaseDataSet().addLine(newPoint);
-            for (IColumn c : this.getBaseDataSet().getColumnsWithoutClass()) {
+            newPoint.setPointGenClass();
+            baseDataSet.addLine(newPoint);
+            for (IColumn c : this.ds().getColumnsWithoutClass()) {
                 if (c.getName().equals("embarked")){
                     c.setNormalizer(new EnumNormalizer(Embarked.class));
                 } else if (c.getName().equals("gen")){
@@ -99,7 +100,7 @@ public class Model extends Subject {
         this.notifyObservers();
     }
 
-    public DataSet getBaseDataSet() {
+    public DataSet ds() {
         return this.baseDataSet;
     }
 
@@ -114,6 +115,7 @@ public class Model extends Subject {
     public void setLblTitle(String lbl) {
         this.lblTitle = lbl;
         this.notifyObservers(lbl);
+
     }
 
     public void setDatasetIris(String pathOfFile) {
@@ -140,12 +142,17 @@ public class Model extends Subject {
 
         baseDataSet.setColumns(colonnes);
         baseDataSet.setAllColors();
+        baseDataSet.setAllColors();
         baseDataSet.setColumnClass(variety);
-
 
         axeX = sepalLength;
         axeY = petalLength;
         defaultClassfier = new Classifier(baseDataSet, baseDataSet);
+        if(MainView.sliderValueInt==0) {
+
+            Main.modelClassifier.setBaseDataSetIris(baseDataSet);
+            Main.modelRobustesse.setBaseDataSetIris(baseDataSet);
+        }
         this.notifyObservers();
     }
 
@@ -157,14 +164,14 @@ public class Model extends Subject {
         Column survived = new Column("survived", baseDataSet);
         Column passengerClass = new Column("passengerclass", baseDataSet);
         Column name = new Column("name", baseDataSet);
-        Column gen = new Column("gen", baseDataSet);
+        Column gen = new Column("gen", baseDataSet, new EnumNormalizer(Gender.class));
         Column age = new Column("age", baseDataSet);
         Column sibSp = new Column("sibSp", baseDataSet);
         Column parch = new Column("parch", baseDataSet);
         Column ticket = new Column("ticket", baseDataSet);
         Column cabin = new Column("cabin", baseDataSet);
         Column fare = new Column("fare", baseDataSet);
-        Column embarked = new Column("embarked", baseDataSet);
+        Column embarked = new Column("embarked", baseDataSet, new EnumNormalizer(Embarked.class));
         Column color = new Column("color", baseDataSet);
 
         //attribution des normalizeur aux colonnes
@@ -172,16 +179,8 @@ public class Model extends Subject {
         passengerClass.setNormalizer(new NumberNormalizer(baseDataSet.minValue(passengerClass).doubleValue(), baseDataSet.maxValue(passengerClass).doubleValue()));
         age.setNormalizer(new NumberNormalizer(baseDataSet.minValue(age).doubleValue(), baseDataSet.maxValue(age).doubleValue()));
         sibSp.setNormalizer(new NumberNormalizer(baseDataSet.minValue(sibSp).doubleValue(), baseDataSet.maxValue(sibSp).doubleValue()));
-        parch.setNormalizer(new NumberNormalizer(baseDataSet.minValue(parch).doubleValue(), baseDataSet.maxValue(parch).doubleValue()));
         fare.setNormalizer(new NumberNormalizer(baseDataSet.minValue(fare).doubleValue(), baseDataSet.maxValue(fare).doubleValue()));
-        gen.setNormalizer(new EnumNormalizer(Gender.class));
-        embarked.setNormalizer(new EnumNormalizer(Embarked.class));
-        survived.setNormalizer(new NullNormalizer());
-        ticket.setNormalizer(new NullNormalizer());
-        name.setNormalizer(new NullNormalizer());
-        color.setNormalizer(new NullNormalizer());
         Column[] colonnes = new Column[]{passengerId, survived, passengerClass, name, gen, age, sibSp, parch, ticket, cabin, fare, embarked, color};
-
 
         baseDataSet.setColumns(colonnes);
         baseDataSet.setColumnClass(survived);
@@ -190,6 +189,12 @@ public class Model extends Subject {
         axeX = age;
         axeY = passengerClass;
         defaultClassfier = new Classifier(baseDataSet, baseDataSet);
+        Main.modelClassifier.setBaseDataSetTitanic(baseDataSet);
+        Main.modelRobustesse.setBaseDataSetTitanic(baseDataSet);
         this.notifyObservers();
+    }
+
+    public DataSet getBaseDataSet() {
+        return baseDataSet;
     }
 }

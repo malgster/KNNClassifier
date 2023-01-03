@@ -1,6 +1,6 @@
 package iris;
 
-import both.ClassColor;
+import both.GenClass;
 import com.opencsv.bean.CsvBindByName;
 import dataInterfaces.IColumn;
 import dataInterfaces.IPoint;
@@ -21,7 +21,7 @@ public class IrisRawData implements IPoint {
     protected double petalWidth;
     @CsvBindByName(column = "variety")
     protected IrisVariety variety;
-    protected ClassColor varietycolor = ClassColor.NULL;
+    protected GenClass pointGenClass = GenClass.NULL;
 
     public IrisRawData(double sL, double sW, double pL, double pW, IrisVariety variety) {
         sepalLength = sL;
@@ -34,9 +34,6 @@ public class IrisRawData implements IPoint {
     public IrisRawData() {
     }
 
-    public String toString() {
-        return sepalLength + ", " + sepalWidth + ", " + petalLength + ", " + petalWidth + ", " + variety;
-    }
 
     /**
      * gets the value of the point for a column given as a parameter
@@ -57,10 +54,15 @@ public class IrisRawData implements IPoint {
             case "variety":
                 return variety;
             case "color":
-                return varietycolor;
+                return pointGenClass;
             default:
                 return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return sepalLength + ", " + sepalWidth + ", " + petalLength + ", " + petalWidth + ", " + variety;
     }
 
     /**
@@ -77,26 +79,31 @@ public class IrisRawData implements IPoint {
      * set the color given the class value
      */
     @Override
-    public void setColor() {
-        if (varietycolor != ClassColor.NULL) return;
-        varietycolor = (this.variety != null) ? ClassColor.values()[variety.ordinal()] : ClassColor.NULL;
+    public void setPointGenClass() {
+        if (pointGenClass != GenClass.NULL) return;
+        pointGenClass = (this.variety != null) ? GenClass.values()[variety.ordinal()] : GenClass.NULL;
     }
 
-    public ClassColor getColor() {
-        return this.varietycolor;
+    public GenClass getPointGenClass() {
+        return this.pointGenClass;
     }
 
     @Override
-    public void setColor(ClassColor color) {
-        if (this.varietycolor == ClassColor.NULL) this.varietycolor = color;
+    public void setPointGenClass(GenClass cl) {
+        if (this.pointGenClass == GenClass.NULL) this.pointGenClass = cl;
     }
 
     /**
      * sets the class value given the point's color
      */
     @Override
-    public void setClassFromColor() {
-        variety = (this.varietycolor != ClassColor.NULL) ? IrisVariety.values()[varietycolor.ordinal()] : null;
+    public void setRealClassFromGenClass() {
+        variety = (this.pointGenClass != GenClass.NULL) ? IrisVariety.values()[pointGenClass.ordinal()] : null;
+    }
+
+    @Override
+    public GenClass getPointClass() {
+        return pointGenClass;
     }
 
 }

@@ -94,11 +94,11 @@
 
 <mark>**FICHE DESCRIPTIVE: Catégorisation des données**</mark>
 
-** Système: ** Application
+**Système:** Application
 
-** Cas d’utilisation: ** Catégorisation des données
+**Cas d’utilisation:** Catégorisation des données
 
-** Garantie en cas de succès: ** Chaque donnée sera associée à un classe
+**Garantie en cas de succès:** Chaque donnée sera associée à un classe
 
 <mark>Scénario nominal: </mark>
 - L’utilisatrice sélectionne “Catégoriser les données”.
@@ -163,6 +163,8 @@
 
 - **Deuxieme UML:**
 
+![UML v2](images/UML_v2.png)
+
 - **Les changements :**
 
 	- <mark>TitanicLoad</mark> et <mark>IrisLoad</mark> n'existent plus.
@@ -181,7 +183,7 @@
 	- Dans <mark>TitanicRawData</mark>, embarked n'est plus un char mais une enum contenant *S*, *Q*, *C* et *null*. 
 	- Dans <mark>Gender</mark>, la valeur *OTHER* est spécifiée si l'espace est laissé vide. (*pas besoin de NullObject dans IrisVariety puisqu'il a un NullNormalizer*)
 	- **Pour le MVC:** 
-		 - On a une classe <mark>Modele</mark> qui pèche les éléments des classes du backend qui servent à l'interface, elle hérite de <mark>Subject</mark>. 
+		 - On a une classe <mark>Modele</mark> qui pèche les éléments des classes du backend qui servent à l'interface, elle hérite de <mark>Subject</mark>. On a aussi ModeleClassifier et ModeleRobustesse qui héritent de Subject avec des dataSet différents et fonctionnalités différentes.
 		 - On a plusieurs vues, dont <mark>MainView</mark>, la page principale qui implémente <mark>Observer</mark>.
 		 - Les autres vues sont des pop-up qui n'observent pas <mark>Modele</mark> mais qui peuvent <mark>changer ses attributs</mark> via leurs controlleurs. 
 		 - On a la classe <mark>Main</mark> qui lance la <mark>MainView</mark> qui elle-même lance les autres vues.
@@ -205,5 +207,35 @@
 	- Le <mark>MVC</mark> n'est pas un patron simple à implémenter, surtout quand il s'agit d'un projet et d'une interface aussi conséquente que celle-ci. 
 	- On a fait beaucoup de <mark>*pair-programming*</mark> pour pallier aux points faibles de chacun, surtout quand il s'agit du <mark>JavaFX</mark> et <mark>FXML</mark>. 
 	- <mark>ScatterChart</mark> est un outil qu'on avait jamais utilisé avant. Heureusement, une bonne lecture de la doc nous a permis de l'utiliser. 
-	- Avec la <mark>MainView</mark> qui est une page qui a énormément de fonctionnalités, on se retrouve très vite avec une classe de plus de 400 lignes. 
+	- Avec la <mark>MainView</mark> qui est une page qui a énormément de fonctionnalités, on se retrouve très vite avec une classe de plus de 400 lignes. On a refactor beaucoup de fonctions pour éviter les classes géantes. 
+	- Le code du backend est beaucoup plus clean que celui de l'interface, par faute de temps mais aussi par problématiques posées par le FXML et le fait qu'on ne peut pas instancier un dataSet de façon générique, il faut lui donner des valeurs propres à son type. Puis il nous paraissait compliqué de faire du polymorphisme couplé d'un MVC en respectant la deadline. 
 
+## Au final, c'est plutôt joli! 
+
+![vision dataset vide](images/Sans titre.png)
+
+![vision classifier vide](images/InterfaceClassifierVide.png)
+
+![vision robustesse vide](images/InterfaceRobustesseVide.png)
+
+![choisir le type à classifier](images/ChooseTypeToClassify.png)
+
+![Iris Imported](images/InterfaceDatasetIrisImported.png)
+
+![Iris imported and to classify](images/InterfaceClassifierIrisImportedAndToClassifyImported.png)
+
+![choose parameter for knn](images/ChooseParameterForKNN.png)
+
+![Iris classified](images/IrisClassified.png)
+
+![Iris imported to robustesse](images/IrisImportedToRobustesse.png)
+
+![Iris robustesse](images/IrisRobustesse.png)
+
+![presentation non zoomer](images/scatterChartTitanicNonZoom.PNG)
+
+![presentation zoomer](images/TitanicZoomerEtSelectedPointSurScatterChart.PNG)
+
+![select axe](images/SelectAxe.png)
+
+![Ajouter un point](images/AJouterUnPoint.png)

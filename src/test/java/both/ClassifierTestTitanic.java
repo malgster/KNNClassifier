@@ -89,12 +89,9 @@ class ClassifierTestTitanic {
         for (int i = 1; i < 100; i = i + 1) {
             point = testDataSet.getPoint(i);
             pointsATester.add(point);
-            ClassColor colorAvantClassify = point.getColor();
+            GenClass colorAvantClassify = point.getPointGenClass();
             c.classify(testDataSet.getPoint(i), c.closeNeighbours(point, 5, new EuclidianDistance()));
-            ClassColor colorApresClassify = point.getColor();
-            if (colorApresClassify != colorAvantClassify) {
-                System.out.println("pas pareil");
-            }
+            GenClass colorApresClassify = point.getPointGenClass();
         }
         //assertTrue(c.robustness(5, new EuclidianDistance(), pointsATester)==100);
         assertTrue(c.robustness(5, new EuclidianDistance()) > 80);

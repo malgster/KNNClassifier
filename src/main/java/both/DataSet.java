@@ -45,7 +45,7 @@ public class DataSet implements IDataSet {
     @Override
     public void setAllColors() {
         for (IPoint i : this.myPoints) {
-            i.setColor();
+            i.setPointGenClass();
         }
     }
 
@@ -76,10 +76,16 @@ public class DataSet implements IDataSet {
      * adds the columns to the dataset
      * @param columns
      */
+    @Override
     public void setColumns(IColumn... columns) {
         LinkedList<IColumn> result = new LinkedList<>();
         result.addAll(List.of(columns));
         columnsGeneral= result;
+    }
+
+    @Override
+    public void setColumns(List<IColumn> columns) {
+        columnsGeneral = columns;
     }
 
     /**

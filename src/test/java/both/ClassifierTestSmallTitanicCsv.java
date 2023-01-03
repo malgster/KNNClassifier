@@ -5,6 +5,8 @@ import Normalizers.EnumNormalizer;
 import Normalizers.NullNormalizer;
 import Normalizers.NumberNormalizer;
 import dataInterfaces.IPoint;
+import iris.IrisRawData;
+import iris.IrisVariety;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import titanic.Embarked;
@@ -14,10 +16,9 @@ import utils.CsvLoader;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * tests the classifier methods for a small titanic csv
@@ -136,16 +137,24 @@ class ClassifierTestSmallTitanicCsv {
     void test_classify() {
         IPoint ird = testDataSet.getPoint(0);
         IPoint ird2 = testDataSet.getPoint(2);
-        assertEquals(ClassColor.RED, ird.getColor());
+        assertEquals(GenClass.FIRSTCLASS, ird.getPointGenClass());
         c.classify(ird, c.closeNeighbours(ird, 10, new EuclidianDistance()));
-        ird.setClassFromColor();
-        assertEquals(ClassColor.RED, ird.getColor());
+        ird. setRealClassFromGenClass();
+        assertEquals(GenClass.FIRSTCLASS, ird.getPointGenClass());
         assertEquals(false, ird.getValue(survived));
         c.classify(ird2, c.closeNeighbours(ird2, 10, new EuclidianDistance()));
-        ird.setClassFromColor();
-        assertEquals(ClassColor.BLUE, ird2.getColor());
-        ird2.setClassFromColor();
+        ird. setRealClassFromGenClass();
+        assertEquals(GenClass.SECONDCLASS, ird2.getPointGenClass());
+        ird2. setRealClassFromGenClass();
         assertEquals(true, ird2.getValue(survived));
+    }
+
+    @Test
+    void test_set_real_class_from_gen_class(){
+        TitanicRawData ird = (TitanicRawData) testDataSet.getPoint(0);
+        ird.setPointGenClass(GenClass.FIRSTCLASS);
+        ird.setRealClassFromGenClass();
+        assertFalse((Boolean) ird.getValue(survived));
     }
 
 }

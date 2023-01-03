@@ -5,6 +5,7 @@ import Normalizers.NullNormalizer;
 import Normalizers.NumberNormalizer;
 import dataInterfaces.IPoint;
 import iris.IrisRawData;
+import iris.IrisVariety;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.CsvLoader;
@@ -80,7 +81,7 @@ class ClassifierTestSmallIrisCsv {
         assertEquals(3, neighbours.size());
         assertEquals(suspectedNeighbours, neighbours);
         assertEquals(testDataSet.getPoint(1), suspectedNeighbours.get(0));
-        assertEquals(testDataSet.getPoint(1).getColor(), suspectedNeighbours.get(0).getColor());
+        assertEquals(testDataSet.getPoint(1).getPointGenClass(), suspectedNeighbours.get(0).getPointGenClass());
     }
 
     /**
@@ -89,11 +90,11 @@ class ClassifierTestSmallIrisCsv {
     @Test
     void test_classify() {
         IPoint ird = testDataSet.getPoint(0);
-        assertEquals(ClassColor.NULL, ird.getColor());
+        assertEquals(GenClass.NULL, ird.getPointGenClass());
         c.classify(ird, c.closeNeighbours(ird, 3, new EuclidianDistance()));
-        assertNotEquals(ClassColor.NULL, ird.getColor());
-        ird.setClassFromColor();
-        assertEquals(ClassColor.BLUE, ird.getColor());
+        assertNotEquals(GenClass.NULL, ird.getPointGenClass());
+        ird. setRealClassFromGenClass();
+        assertEquals(GenClass.SECONDCLASS, ird.getPointGenClass());
 
     }
 
@@ -116,5 +117,13 @@ class ClassifierTestSmallIrisCsv {
     @Test
     void test_denormalize() {
         assertTrue((Double) petalWidth.getDenormalizedValue(testDataSet.getPoint(1).getNormalizedValue(petalWidth)) > 1);
+    }
+
+    @Test
+    void test_set_real_class_from_gen_class(){
+        IrisRawData ird = (IrisRawData) testDataSet.getPoint(0);
+        ird.setPointGenClass(GenClass.FIRSTCLASS);
+        ird.setRealClassFromGenClass();
+        assertEquals(IrisVariety.SETOSA, ird.getValue(variety));
     }
 }

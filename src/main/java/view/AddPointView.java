@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -41,6 +42,11 @@ public class AddPointView extends Application {
     @FXML
     private ChoiceBox genValue = new ChoiceBox<>();
 
+    private MainView mainView;
+
+    @FXML
+    private Button ok;
+
     /**
      * displays the form
      * @param mainStage the primary stage for this application, onto which
@@ -67,6 +73,10 @@ public class AddPointView extends Application {
         mainStage.show();
     }
 
+    public void setMainView(MainView mainView) {
+        this.mainView = mainView;
+    }
+
     /**
      * initializes the form with textfields for numeric and text values and choiceBoxes for enum and boolean values
      */
@@ -75,11 +85,11 @@ public class AddPointView extends Application {
         HBox boiteformulaire;
         TextField formulaire;
         //affichage des formulaires (ui c'est long)
-        for (int i = 0; i < Main.modele.getBaseDataSet().getColumnsWithoutClass().size(); i++) {
-            if (!Main.modele.getBaseDataSet().getColumnsWithoutClass().get(i).getName().equals("embarked") && !Main.modele.getBaseDataSet().getColumnsWithoutClass().get(i).getName().equals("gen")) {
+        for (int i = 0; i < Main.modele.ds().getColumnsWithoutClass().size(); i++) {
+            if (!Main.modele.ds().getColumnsWithoutClass().get(i).getName().equals("embarked") && !Main.modele.ds().getColumnsWithoutClass().get(i).getName().equals("gen")) {
                 boiteformulaire = new HBox();
                 formulaire = new TextField();
-                formulaire.setPromptText(Main.modele.getBaseDataSet().getColumnsWithoutClass().get(i).getName());
+                formulaire.setPromptText(Main.modele.ds().getColumnsWithoutClass().get(i).getName());
                 controller.formulaires.add(formulaire);
                 boiteformulaire.getChildren().add(formulaire);
                 boiteformulaire.setAlignment(Pos.CENTER);
@@ -87,7 +97,7 @@ public class AddPointView extends Application {
             }
         }
 
-        if (Main.modele.getBaseDataSet().getTitle().equals("IrisSet")) {
+        if (Main.modele.ds().getTitle().equals("IrisSet")) {
             List<String> varietiesValues = new ArrayList<>();
             for (IrisVariety var : IrisVariety.values()) {
                 varietiesValues.add(var.toString());
@@ -100,7 +110,7 @@ public class AddPointView extends Application {
             choice.getChildren().add(this.controller.classeValue);
             controller.vBoxAttributes.getChildren().add(choice);
 
-        } else if (Main.modele.getBaseDataSet().getTitle().equals("TitanicSet")) {
+        } else if (Main.modele.ds().getTitle().equals("TitanicSet")) {
             List<String> booleanValues = new ArrayList<>();
             booleanValues.add("true");
             booleanValues.add("false");
@@ -147,18 +157,25 @@ public class AddPointView extends Application {
      * @param actionEvent
      */
     public void handleOk(ActionEvent actionEvent) {
-        //handle du bouton ok
         List<String> formulaireValeurs = new ArrayList<>();
         for (TextField tf : formulaires) {
             formulaireValeurs.add(tf.getText());
         }
 
-        if (Main.modele.getBaseDataSet().getTitle().equals("TitanicSet")) {
+        if (Main.modele.ds().getTitle().equals("TitanicSet")) {
             formulaireValeurs.add((String) genValue.getValue());
             formulaireValeurs.add((String) embarkedValue.getValue());
-
         }
-        formulaireValeurs.add((String) classeValue.getValue());
-        Main.modele.setFormulaireValeurs(formulaireValeurs);
+        if(MainView.sliderValueInt==0) {
+            formulaireValeurs.add((String) classeValue.getValue());
+            Main.modele.setFormulaireValeurs(formulaireValeurs);
+        }else if(MainView.sliderValueInt==2){
+            formulaireValeurs.add((String) classeValue.getValue());
+            Main.modelRobustesse.setFormulaireValeurs(formulaireValeurs);
+            Main.modelClassifier.notifyChanged();
+        }else if(MainView.sliderValueInt==1){
+            Main.modelClassifier.setFormulaireValeurs(formulaireValeurs);
+            Main.modelClassifier.notifyChanged();
+        }
     }
 }

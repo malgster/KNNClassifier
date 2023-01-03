@@ -1,6 +1,6 @@
 package dataInterfaces;
 
-import both.ClassColor;
+import both.GenClass;
 
 public interface IPoint {
 
@@ -22,12 +22,13 @@ public interface IPoint {
      */
     double getNormalizedValue(IColumn xcol);
 
-    void setColor();
+    void setPointGenClass();
 
-    ClassColor getColor();
+    GenClass getPointGenClass();
 
-    void setColor(ClassColor color);
+    void setPointGenClass(GenClass cl);
 
-    void setClassFromColor();
+    void setRealClassFromGenClass();
 
+    GenClass getPointClass();
 }

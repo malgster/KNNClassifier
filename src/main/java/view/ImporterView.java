@@ -16,11 +16,11 @@ import javafx.stage.Stage;
 public class ImporterView extends Application {
 
     @FXML
-    private RadioButton RadioButtonIris = new RadioButton();
+    private RadioButton radioButtonIris = new RadioButton();
     @FXML
-    private RadioButton RadioButtonTitanic = new RadioButton();
+    private RadioButton radioButtonTitanic = new RadioButton();
     @FXML
-    private Button ButtonSubmit = new Button();
+    private Button buttonSubmit = new Button();
 
     public ImporterView() {
     }
@@ -49,13 +49,15 @@ public class ImporterView extends Application {
      */
     public void handleSubmit(MouseEvent mouseEvent) throws Exception {
 
-        if (RadioButtonIris.isSelected()) {
+        if (radioButtonIris.isSelected()) {
             Main.modele.setLblTitle("Iris");
-            Stage stage = (Stage) ButtonSubmit.getScene().getWindow();
+            MainView.title="Iris";
+            Stage stage = (Stage) buttonSubmit.getScene().getWindow();
             stage.close();
         } else {
             Main.modele.setLblTitle("Titanic");
-            Stage stage = (Stage) ButtonSubmit.getScene().getWindow();
+            MainView.title="Titanic";
+            Stage stage = (Stage) buttonSubmit.getScene().getWindow();
             stage.close();
         }
 

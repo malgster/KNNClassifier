@@ -36,4 +36,8 @@ public class BooleanNormalizerTest {
         assertEquals(false, booNorm.denormalize(0.0));
     }
 
+    @Test
+    void boolean_normalizer_string_value_test(){
+        assertEquals("boolean", booNorm.stringValue());
+    }
 }

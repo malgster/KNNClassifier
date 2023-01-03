@@ -39,7 +39,7 @@ public class AttributeXView extends Application {
         mainStage.setTitle("Choisir l'attribut de l'axe des abcisses");
         mainStage.setResizable(false);
         mainStage.setScene(scene);
-        List<IColumn> values = Main.modele.getBaseDataSet().getColumns();
+        List<IColumn> values = Main.modele.ds().getColumns();
         List<String> noms = new ArrayList<>();
         for (IColumn c : values) {
             if(c.isNormalizable()) {
@@ -56,7 +56,9 @@ public class AttributeXView extends Application {
      * called when the button ok is pressed
      */
     public void handleOk(ActionEvent actionEvent) {
-        Main.modele.setAxeX(Main.modele.getBaseDataSet().getColumn(choiceX.getSelectionModel().getSelectedItem().toString()));
+        Main.modele.setAxeX(Main.modele.ds().getColumn(choiceX.getSelectionModel().getSelectedItem().toString()));
+        Main.modelClassifier.setAxeX(Main.modelClassifier.getDataSet().getColumn(choiceX.getSelectionModel().getSelectedItem().toString()));
+        Main.modelRobustesse.setAxeX(Main.modele.ds().getColumn(choiceX.getSelectionModel().getSelectedItem().toString()));
         Stage stage = (Stage) choiceX.getScene().getWindow();
         stage.close();
     }

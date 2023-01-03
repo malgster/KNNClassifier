@@ -1,7 +1,7 @@
 package titanic;
 
 
-import both.ClassColor;
+import both.GenClass;
 import com.opencsv.bean.CsvBindByName;
 import dataInterfaces.IColumn;
 import dataInterfaces.IPoint;
@@ -35,7 +35,7 @@ public class TitanicRawData implements IPoint {
     protected double fare;
     @CsvBindByName(column = "Embarked")
     protected Embarked embarked;
-    protected ClassColor survivedColor = ClassColor.NULL;
+    protected GenClass pointGenClass = GenClass.NULL;
 
     public TitanicRawData() {
     }
@@ -89,7 +89,7 @@ public class TitanicRawData implements IPoint {
                 return (this.embarked != null) ? this.embarked : Embarked.NULL;
 
             case "color":
-                return this.survivedColor;
+                return this.pointGenClass;
             default:
                 return null;
         }
@@ -107,30 +107,35 @@ public class TitanicRawData implements IPoint {
     }
 
     @Override
-    public void setColor() {
+    public void setPointGenClass() {
         int ordinal = (this.survived) ? 1 : 0;
-        this.survivedColor = ClassColor.values()[ordinal];
+        this.pointGenClass = GenClass.values()[ordinal];
     }
 
     @Override
-    public ClassColor getColor() {
-        return survivedColor;
+    public GenClass getPointGenClass() {
+        return pointGenClass;
     }
 
     /**
      * set the color given the class value
      */
     @Override
-    public void setColor(ClassColor color) {
-        this.survivedColor = color;
+    public void setPointGenClass(GenClass cl) {
+        this.pointGenClass = cl;
     }
 
     /**
      * sets the class value given the point's color
      */
     @Override
-    public void setClassFromColor() {
-        survived = (survivedColor == ClassColor.BLUE);
+    public void setRealClassFromGenClass() {
+        survived = (pointGenClass == GenClass.SECONDCLASS);
+    }
+
+    @Override
+    public GenClass getPointClass() {
+        return pointGenClass;
     }
 
     @Override
